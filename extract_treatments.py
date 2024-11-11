@@ -5,12 +5,6 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', None)
 import re
 
-species_names = ['Calamus concolor',
-            'Calamus disjunctus',
-            'Calamus glaucescens',
-            'Calamus hallierianus',
-            'Calamus pseudoconcolor',
-            'Calamus subangulatus']
 
 # Define a function that will help us clean boilerplate text from lines
 def cleanLine(s, page_number):
@@ -141,6 +135,7 @@ def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Process the text format Calamus monograph to get treatments")
     parser.add_argument('input_file', help="Path to the input PDF file")
+    parser.add_argument('target_species_filename', help="Path to the file listing target species names")
     parser.add_argument('output_file', help="Path to the output file")
     
     # Parse arguments
@@ -179,6 +174,11 @@ def main():
     pd.set_option('display.max_rows',500)
     print(df_lines.groupby(df_lines.taxon_id_and_name).size())
 
+    with open(args.target_species_filename, 'r') as file:
+        lines = file.readlines()
+    # Remove newline characters from each line (optional)
+    species_names = [line.strip() for line in lines]
+    
     for species_name in species_names:
         mask = (df_lines.taxon_id_and_name.str.contains(species_name,na=False))
         print(df_lines[mask][['line_cleaned']])

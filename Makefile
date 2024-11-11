@@ -6,7 +6,7 @@ data/appendix_2.txt: clean_appendix.py resources/appendix_2.txt
 	mkdir -p data
 	python $^ $@
 
-data/calamus_monograph_treatments.txt: extract_treatments.py resources/calamus_monograph.pdf
+data/calamus_monograph_treatments.txt: extract_treatments.py resources/calamus_monograph.pdf resources/target_species.txt
 	mkdir -p data
 	python $^ $@
 
