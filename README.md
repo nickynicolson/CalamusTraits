@@ -71,3 +71,12 @@ is said on the label to come from Sandakan in Sabah, far outside the range of ot
 (_Mogea 7398_), from far outside the range of other specimens in South Kalimantan, has an unusual, spiny sheath. A
 specimen (_Peters s.n._) is also unusual in its spiny leaf sheaths, small fruits, and habitat. The label records the habitat as
 “seasonally inundated forest … flooded 4 to 6 months a year”.
+
+## How to run the scripts
+
+This assumes that you have cloned the repository to a machine where you have: (a) a local installation of Python, (b) the build tool `make` and (c) a command line terminal program to run the following commands:
+
+1. Set up a virtual environment: `python -m venv env` and activate it: `source env/Scripts/activate`
+2. Install the libraries: `pip install -r requirements.txt`
+3. Copy the source PDF to the `resources`1 directory, name it `calamus_monograph.pdf`
+4. Run the script to extract trait defintions and species descriptions: `make all`
