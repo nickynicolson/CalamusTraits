@@ -1,0 +1,337 @@
+1. Stems solitary (0); stems clustered (1). (solclu)
+2. Stems non-climbing, erect or creeping, sometimes short and subterranean, sometimes weakly climbing (0); stems climbing (1). (climbs)
+3. Leaf sheaths tubular, closed opposite the petiole, usually with a knee below the petiole (0); leaf sheaths not tubular, open opposite the petiole, usually without a knee (1); leaf sheaths tubular, closed opposite the petiole, without a knee below the petiole (2). (sheath)
+4. Leaf sheaths mottled with irregular bands of tomentum (0); leaf sheaths covered with dense, dark brown, reddishbrown, or gray, persistent tomentum (1); leaf sheaths mottled but not tomentose (2); leaf sheaths covered with dense, flat, black scales (3); leaf sheaths not mottled nor with persistent tomentum nor with black scales (4). (mottle)
+5. Leaf sheath spines slender to stout, triangular, concave at the base proximally, horizontally spreading or downward pointing, scattered to dense, rarely in horizontal rows, yellowish-brown to dark brown (0); leaf sheath spines short to long, triangular, concave at the base proximally, usually horizontally spreading, scattered to dense, yellowish-brown to dark brown, slightly swollen-based or with an adjacent swelling (1); leaf sheath spines not as above (2). (dactyl)
+6. Leaf sheath spines usually long, triangular, scarcely concave at the base proximally, usually horizontally spreading, sometimes upward-pointing, scattered to dense, laminar, elastic, black or dark brown (0); leaf sheath spines not as above (1). (elasti)
+7. Leaf sheath spines well-developed, triangular, often downward pointing, swollen at the base distally, scattered to dense, brownish, often black-tipped, sometimes with shorter spines interspersed (0); leaf sheath spines not as above (1). (latifo)
+8. Leaf sheath spines short, triangular, horizontal, tending to be in horizontal rows but spines not joined to one another in a row, yellowish-brown (0); leaf sheaths spines not as above (1). (hetera)
+9. Leaf sheath spines short to elongate, narrowly triangular, horizontal or often curved, scattered to dense, scarcely concave at the base proximally, leaving a distinct impression in the sheath, rarely with multiple splits at the apex, yellowish-brown or dark brown (0); leaf sheath spines not as above (1). (unifar)
+10. Leaf sheath spines scattered to dense, flattened, at least some laciniate (0); leaf sheath spines not as above (1). (dasyac)
+11. Leaf sheath spines elongate, needle-like, densely arranged, sometimes borne in horizontal rows, horizontal or erect, black or brown (0); leaf sheath spines not as above (1). (discol)
+12. Leaf sheath spines narrowly triangular, horizontal, rarely upward-pointing, short, scattered to dense, rarely in horizontal rows, dark brown or black, often black-tipped (0); leaf sheath spines not as above (1). (phispi)
+13. Leaf sheath spines few, scattered, shortly recurved on a swollen base, sometimes swellings only, not leaving a distal impression in the sheath (0); leaf sheath spines not as above (1). (bulbou)
+14. Leaf sheath spines short, scattered, usually upward-pointing, borne proximally on an ellipsoid swelling, blacktipped (0); leaf sheath spines not as above (1). (swelli)
+15. Leaf sheath spines short, scattered, sometimes upward-pointing, with a distinct swelling at the base adaxially (0); leaf sheath spines not as above (1). (gracil)
+16. Leaf sheath spines short, straight (rarely wavy), very fine and needle-like, sometimes in short, horizontal rows, brownish, early deciduous, often denser and erect at sheath apex, sometimes other kinds of spines interspersed (0); leaf sheath spines not as above (1). (needle)
+17. Leaf sheath spines short to elongate, narrowly triangular, not concave at the base proximally, scattered to dense, yellowish or brownish throughout (0); leaf sheath spines not as above (1). (pholid)
+18. Leaf sheath spines narrow, yellowish-brown, sometimes in short, horizontal rows below the petiole, not concave basally but often with an abaxial concavity for up to half their length, those along distal sheath and petiole margins longer than others, almost regularly arranged, sometimes interspersed with reddish-brown, papery spines (0); leaf sheath spines not as above (1). (petmar)
+19. Leaf sheath spines short, triangular, concave at the base proximally, upward-pointing, often lying almost flat against the sheath, yellowish-brown to dark brown (0); leaf sheath spines not as above (1). (upward)
+20. Leaf sheath spines minute, in partial, horizontal or oblique combs of spines at apex of sheath only, rarely extending proximally on sheath, usually some longer spines also present (0); leaf sheath spines not as above (1). (pachys)
+21. Leaf sheath spines flattened, triangular, horizontal or often upward pointing, with more or less persistent, long, black hairs on margins, often horizontal ridges or rows of short spines also present (0); leaf sheaths not as above (1). (hairli)
+22. Leaf sheath spines dense, minute, giving a rough feel to the surface of the sheath, usually with longer spines present (0); leaf sheath spines not as above (1). (scabrid)
+23. Leaf sheath spines few or absent, the sheaths densely covered with short, bulbous-based hairs, giving a rough feel to the surface of the sheath (0); leaf sheath spines few or absent, the sheaths densely covered with long, bulbous-based hairs, giving a soft feel to the surface of the sheath (1); leaf sheath spines few to numerous, with few to numerous short, bulbous-based spines also present, often in short, horizontal rows adjacent to larger spines (2); leaf sheath spines not as above (3). (exilis)
+24. Leaf sheath spines of two kinds, one large, flat, straight, triangular, usually black or brown (sometimes these laciniate), the other shorter, needle-like, black, both kinds scattered or borne on short to long, horizontal to oblique, raised ridges (0); leaf sheath spines black or brown, needle-like, easily detached, borne on short to long, horizontal to oblique, raised ridges (1); leaf sheath spines not as above (2). (intersp)
+25. Leaf sheath spines fine, black or yellowish, needle-like, elongate, joined at their bases into short to long, horizontal collars, at least some adjacent collars pointing upwards and downwards and interlocking to form chambers (0); leaf sheath spines narrow, joined at their bases into short to long, oblique, non-interlocking, downward-pointing collars (1); leaf sheath spines fine, black, needle-like, elongate, with longer, flat, yellow or brownish spines present, joined at their bases into short to long, horizontal collars, at least some adjacent collars pointing upwards and downwards and interlocking to form chambers (2); leaf sheath spines fine, black or yellowish, needle-like, easily detached, joined at their bases into low, horizontal, non-interlocking, downward-pointing collars (3); leaf sheath spines fine, black or yellowish, needle-like, elongate, scarcely joined at their bases, arranged in short, horizontal rows (4); leaf sheath spines fine, black, needle-like, with briefly swollen bases, scattered or in small groups, easily detached and leaving swollen base only, sometimes with longer, wider spines present (5); leaf sheath spines fine, black, needle-like, with briefly swollen bases, scattered or in small groups, at least some spines confluent into wider spines (6); leaf sheath spines not as above (7). (horseh)
+26. Leaf sheath spines stout, flat, triangular, yellowish, often downward-pointing, often in horizontal rows but the bases not forming collars (0); leaf sheath spines stout, flat, triangular, yellowish or brownish, often in horizontal rows but the bases not forming collars, sometimes with low ridges adjacent to spines, sometimes the ridges with horizontal rows of needle-like spines (1); leaf sheath spines not as above (2). (ingens)
+27. Leaf sheath spines flattened, narrow to broad, scattered to dense, elastic, usually without a distinct groove adaxially at the base, sometimes joined into partial or complete rings, light brown, lighter brown at the base (0); leaf sheath spines not as above (1). (siphon)
+28. Leaf sheath spines minute, joined at their bases into horizontal or oblique, partial or complete rings, these covering all the sheath, usually with some larger spines present (0); leaf sheath spines not as above (1). (minute)
+29. Leaf sheaths spines flattened, yellowish-brown, upward pointing or horizontally spreading, borne in distinct, parallel, horizontal rows (0); leaf sheaths spines flattened, brown or black, horizontally spreading, borne in distinct, parallel, oblique rows (1); leaf sheath spines not as above (2). (moti)
+30. Leaf sheath spines short, needle-like, swollen-based, in small groups of 1 main spine and smaller lateral spines, especially near sheath apex (0); leaf sheath spines not as above (1). (spiral)
+31. Leaf sheath spines triangular, flattened, scattered or dense, often in horizontal rows, sometimes with adjacent horizontal rows of short spines present, easily breaking and detaching by a basal groove, sometimes covered with dense, long, brown hairs (0); leaf sheath spines triangular, flattened, scattered or dense, usually upward-pointing, easily breaking and detaching by a basal groove (1); leaf sheath spines not as above (2). (detach)
+32. Leaf sheaths with numerous spicules borne on short, low, horizontal ridges, easily detached and leaving the sheaths
+with ridges only, sometimes with larger spines present (0); leaf sheaths with numerous, scattered spicules, easily
+detached, sometimes with larger spines present (1); leaf sheaths not as above (2). (spicul)
+33. Leaf sheath spines absent (0); leaf sheath spines present (1). (nospin)
+34. Leaf sheath spines with the lateral margins oblique, extended downwards, sometimes into a low ridge (0); leaf
+sheath spines without oblique, extended lateral margins (1). (latmar)
+35. Leaf sheath spines markedly longer at sheath apex (0); leaf sheath spines markedly longer at sheath apex and there
+close, erect, usually flattened, forming a ‘fence’ around the apex, eventually detaching and leaving a row of stubs (1);
+A REVISION OF CALAMUS Phytotaxa 445 (1) © 2020 Magnolia Press • 481
+leaf sheath spines not markedly longer at sheath apex (2). (spines)
+36. Leaf sheaths without spines but with horizontal, partial or complete, reddish ridges (0); leaf sheaths without reddish
+ridges (1). (corrug)
+37. Ocreas short, densely spiny with short spines, these sometimes forming oblique rows (0); ocreas not as above (1).
+(ocrflo)
+38. Ocreas short to elongate, fibrous with net-like fibers, rarely merely a row of erect spinules, early decaying and
+deciduous, leaving an uneven abscission zone (0); ocreas not as above (1). (ocrpog)
+39. Ocreas developed either side of petiole only, resembling two lobes, densely spiny with long, erect spines along the
+margins (0); ocreas not as above (1). (ocrlep)
+40. Ocreas short, membranous, with a dense fringe of narrow, light brown hairs, extended into an acute apex above the
+petiole, splitting and falling early (0); ocreas not as above (1). (ocrlae)
+41. Ocreas short, membranous, usually not spiny, with external and internal abscission zone, splitting and falling early
+(0); ocreas not as above (1). (ocrdiv)
+42. Ocreas scarcely developed, densely covered with a fringe of short, erect, bulbous-based hairs (0); ocreas welldeveloped, densely covered with short, bulbous-based hairs (1); ocreas not as above (2). (ocrcil)
+43. Ocreas short to elongate, densely spiny with short, brown or black, erect spines (0); ocreas not as above (1).
+(ocrwal)
+44. Ocreas short, membranous, usually not spiny, forming an irregular ring but usually open or reduced above the
+petiole, splitting early (0); ocreas not as above (1). (ocrpoi)
+45. Ocreas short, membranous, usually not spiny, extended into an acute apex above the petiole, rarely elongate above
+petiole, splitting and falling early (0); ocreas not as above (1). (ocrpal)
+46. Ocreas well-developed, tubular, developed above the petiole but often open opposite the petiole, rounded or pointed
+at the apex, often swollen proximally, fibrous or papery, with a basal abscission zone, disintegrating early (0); ocreas
+moderately developed, open opposite the petiole and diverging away from the sheath, not disintegrating (1); ocreas
+well-developed, tubular initially, soon becoming fibrous, net-like, and funnel-shaped (2); ocreas not as above (3).
+(ocrlon)
+47. Ocreas short, tubular, truncate at the apex, usually densely spiny with erect spines, sometimes non-spiny (0); ocreas
+not as above (1). (ocrtru)
+48. Ocreas well-developed, not tubular, not developed above the petiole, densely covered with short spines, truncate at
+the apex, splitting lengthways and disintegrating early (0); ocreas not as above (1). (ocrset)
+49. Ocreas scarcely developed, with two low, lateral ridges either side of sheath, not developed above the petiole (0);
+ocreas well-developed, with two lateral flanges either side of sheath, not developed above the petiole (1); ocreas welldeveloped, with two lateral flanges either side of sheath, developed above the petiole and diverging away from the
+sheath above the petiole (2); ocreas not as above (3). (ocrerin)
+50. Ocreas ligule-like, often greatly extended, developed above the petiole only, spiny as the sheaths, with irregular,
+lighter colored, deciduous material along the margins (0); ocreas not as above (1). (ocrsip)
+51. Ocreas well-developed, tubular, developed above the petiole, truncate at the apex, splitting lengthways and
+disintegrating early (0); ocreas not as above (1). (ocrcon)
+52. Ocreas well-developed, moderate to elongate, membranous, brown, usually not spiny, splitting and falling early
+(0); ocreas not as above (1). (ocrgur)
+53. Ocreas brown, membranous, developed along leaf sheath margins, terminating in two short, narrow lobes on either
+side of petiole (0); ocreas brown, membranous, developed along leaf sheath margins, terminating in two prominent,
+erect, well-developed lobes on either side of petiole (1); ocreas not as above (2). (ocrper)
+54. Ocreas short, oblique, truncate, persistent, leathery, mottled as the sheaths, more or less persistent (0); ocreas not
+as above (1). (ocrrho)
+55. Ocreas short, membranous, brown, ribbed, tubular but irregular at the apex and usually longer opposite the petiole,
+with a fringe of narrow, erect, brown hairs at the apex, fragile and disintegrating early (0); ocreas not as above (1).
+(ocrjav)
+56. Ocreas short, prominent, well-developed above petiole, open opposite petiole, triangular and slightly diverging
+from sheath toward petiole (0); ocreas not as above (1). (ocrpse)
+57. Ocreas prominent, not spiny, coriaceous, well-developed above petiole, open opposite petiole, persistent (0); ocreas
+not as above (1). (ocrpip)
+58. Ocreas elongate, split into two narrow lobes either side of petiole, covered with long spicules (0); ocreas not as
+above (1). (ocrurs)
+59. Ocreas with a dense tuft of erect spines at the apex (0); ocreas without a tuft of erect spines at the apex (1).
+(ocrrha)
+60. Flagella well-developed (0); flagella absent (1); flagella vestigial (2). (flagel).
+Presence or absence of flagella is difficult to score, particularly in the case of cirrate species. These obviously lack a
+flagella, but this is seldom recorded on specimen labels. In these cases, flagella is not scored in the data matrix, but
+flagella are given as absent in the descriptions.
+61. Petioles and rachises with long, straight, yellowish or brownish, black-tipped, usually solitary spines abaxially and
+laterally (0); petioles and rachises without long, straight, spines abaxially and laterally (1). (rachis)
+62. Petioles and rachises with at least some long, straight, flat, usually grouped spines abaxially (0); petioles and
+rachises with whorls of long, straight, flat spines (1); rachises without long, straight, flat spines abaxially (2). (rachil)
+63. Rachises sparsely to densely covered with reddish-brown or brown, wooly hairs (0); rachises without wooly hairs
+(1). (wooly)
+64. Rachis apices filiform or sometimes just a short stub between the distal pair of pinnae (sometimes extended
+into a short subcirrus) (0); rachis apices extended into an elongate cirrus, adaxially convex or ridged, abaxially with
+mostly solitary, scattered, irregularly arranged spines, terminating in a narrow, flat stub (1); rachis apices extended
+into an elongate, rarely short cirrus, adaxially flat, abaxially with more or less regularly arranged (at least proximally),
+distantly spaced clusters of dark-tipped, recurved spines, terminating in a shallow groove adaxially (2); rachis apices
+extended into an elongate cirrus, usually with reduced or vestigial pinnae, adaxially flat, abaxially with more or less
+regularly arranged (at least proximally), distantly spaced clusters of dark-tipped, recurved spines, terminating in a
+shallow groove adaxially (3); rachis apices extended into an elongate cirrus, usually with reduced or vestigial pinnae,
+adaxially flat, abaxially with irregularly arranged, closely spaced, solitary or clustered dark-tipped, recurved spines,
+terminating in a shallow groove adaxially (4); rachis apices extended into an elongate cirrus, adaxially flat, abaxially
+with irregularly arranged, closely spaced, solitary or clustered dark-tipped, recurved spines, terminating in a shallow
+groove adaxially (5); rachis apices extended into a cirrus narrower than the rachis and not continuous with it adaxially,
+without vestigial pinnae, with scattered, solitary spines, terminating in a slender axis (6); rachis apices extended into
+an elongate cirrus, without reduced or vestigial pinnae, adaxially flat, abaxially with more or less regularly arranged
+(at least proximally), distantly spaced clusters of dark-tipped, recurved spines, terminating in a stub, without a shallow
+groove adaxially (7). (racir)
+65. Pinnae regularly arranged and spreading in the same plane (0); pinnae irregularly arranged, often in groups,
+sometimes spreading in different planes (1); pinnae arranged in remote clusters, the pinnae of a cluster spreading
+in different planes (2); pinnae regularly arranged but with gaps (3); pinnae arranged in divergent pairs (4); pinnae
+arranged in a fan shape on a scarcely developed rachis (5). (pinnae)
+66. Pinnae elliptic, sometimes oblanceolate or mucronate, usually without spinules on veins adaxially or abaxially,
+the lateral veins diverging then converging, both terminating apically or slightly subapically (0); pinnae linear to
+lanceolate, usually with spinules on veins adaxially and/or abaxially, the lateral veins approximately parallel, one
+terminating subapically, leaving a distinct or obscure, adaxial ‘broken’ vein (1); pinnae oblanceolate, with truncate,
+praemorse apices, with spinules on veins (2); pinnae broadly elliptic to rhombic, the lateral veins diverging and not
+reaching pinna apex, without spinules on veins (3); pinnae rhombic, the lateral veins diverging, the two distal margins
+praemorse, without spinules on veins (4). (pinsha)
+67. Pinnae divaricate, especially distal ones and distal pair (0); pinnae not divaricate (1). (divari)
+68. Pinnae thick and leathery with prominent cross-veins (0); pinnae not thick and leathery (1). (insign)
+69. Pinnae with numerous, minute hairs abaxially (0); pinnae with numerous, minute hairs adaxially and abaxially (1);
+pinnae without numerous minute hairs (2). (hairy)
+70. Pinnae densely spinulose abaxially (0); pinnae with many, closely spaced spinules on mid-vein abaxially and
+fewer, distantly spaced spinules on lateral veins (1); pinnae not densely spinulose abaxially (2). (specta)
+71. Pinnae grayish-white, dull gray, or brownish indumentose abaxially (0); pinnae waxy abaxially (1); pinnae not
+indumentose or waxy abaxially (2). (grayis)
+72. Pinnae with few to numerous, small, brown scales abaxially (0); pinnae without small, brown scales abaxially (1).
+(erinac)
+73. Pinnae bases abaxially sparsely to densely covered with reddish-brown or brown, wooly hairs (0); pinnae bases
+abaxially without reddish-brown hairs (1). (reddis)
+74. Pinnae bases (and adjacent rachis) adaxially with a tuft of short spinules (0); pinnae bases adaxially without a tuft
+of short spinules (1). (tufted)
+75. Pinnae midvein and distal lateral vein usually raised and spinulose adaxially, the proximal lateral vein scarcely raised and usually not spinulose adaxially (0) pinnae midvein and lateral veins equally raised (1). (phvein)
+76. Proximalmost pinnae swept back across the sheath (on adult plants only) (0); proximalmost pinnae not swept back
+across the sheath (1). (sweptb)
+77. Proximalmost pinnae much reduced (0); proximalmost pinnae not much reduced (1). (proxim)
+78. Distalmost pinnae much reduced (0); distalmost pinnae not much reduced (1). (distal)
+79. Distalmost few (usually 4) pinnae in a close group, the distalmost pair joined for much of their length and oriented
+in line with the rachis, the adjacent pair oriented at approximately 45º angle to the rachis (0); distalmost pinnae not
+arranged in a close group (1). (pinfew)
+80. Inflorescences produced sequentially over the life of the stem (0); inflorescences produced simultaneously at the
+end of the life of the stem (1). (semelp)
+81. Inflorescences forming new plants at the apex (0); inflorescences not forming new plants at the apex (1). (rootin)
+82. Inflorescences diverging from sheath well below sheath apex, with two vertical ridges distal to point of divergence
+(0); inflorescences diverging from sheath near sheath apex, with two diverging ridges distal to point of divergence (1).
+(infpos)
+83. Inflorescences erect to arching, short, without any recurved spines, terminating in a short, obscure stub (0);
+inflorescences not as above (1). (infdae)
+84. Inflorescences arching, slender, elongate, with solitary or grouped, recurved spines on rachis and rachis bracts
+abaxially, usually terminating in a flagellum-like apex (0); inflorescences not as above (1). (inflag)
+85. Inflorescences erect to arching, slender, short to elongate, with or without recurved spines on rachis and rachis
+bracts abaxially, without a flagellum-like apex (0); inflorescences not as above (1). (infall)
+86. Inflorescences erect or somewhat arching, somewhat congested, with few or without recurved spines, terminating
+in a vestigial flagellum (0); inflorescences not as above (1). (infper)
+87. Inflorescences arching, somewhat congested, not elongate nor flagellate, the rachises not visible, completely
+covered by rachis bracts, terminating in a short structure in line with the main inflorescence axis and covered with
+overlapping bracts (0); inflorescences not as above (1). (inferi)
+88. Inflorescences arching, somewhat congested, not elongate nor flagellate, terminating in a short, flat structure
+diverging from the main inflorescence axis (0); inflorescences not as above (1). (infpal)
+89. Inflorescences arching, slender, elongate, usually without recurved spines, terminating in a long, tubular structure
+in line with the main inflorescence axis and covered with overlapping bracts (0); inflorescences not as above (1).
+(infaru)
+90. Peduncles usually elongate, erect, flattened in cross-section, non-spiny or sparsely spiny, the prophyll scar at the
+apex with wide ‘shoulders’, the first partial inflorescence inserted directly above the scar (rarely not directly above)
+(0); peduncles elongate, erect, flattened in cross-section, non-spiny or sparsely spiny, with an obscure prophyll scar at
+the apex, the first partial inflorescence inserted directly above the scar (1); peduncles short (rarely elongate), erect or
+curving, not flattened in cross-section, often densely spiny, the prophyll scar at the apex without wide ‘shoulders’, the
+first partial inflorescence not inserted directly above the scar (2); peduncles very short, not spiny, without a prophyll
+scar at the apex (3); peduncles long, slender, pendulous, not or sparsely spiny, without a prophyll scar at the apex (4);
+peduncles short, erect, flattened in cross-section, non-spiny or sparsely spiny, the prophyll scar at the apex with wide
+‘shoulders’, the first partial inflorescence inserted directly above the scar (5); peduncles scarcely developed above
+point of divergence (6). (pedunc)
+91. Prophylls tubular, persistent, splitting to the base, with an abruptly narrowed, elongate, spiny apex (0); prophylls
+tubular, persistent, usually splitting only at the apex, rarely splitting but remaining tubular at the base (1); prophylls
+tubular, usually splitting to the base, early deciduous or semi-persistent (2); prophylls swollen, persistent, splitting to
+the base, the apex enclosing the tips of the rachis bracts (at least initially) (3); prophylls flattened, persistent, usually
+non-spiny, splitting only at the apex by two short, lateral splits (4); prophylls swollen, persistent, splitting to the base
+(5); prophylls absent (6). (prophy)
+92. Prophylls (including flagella prophylls) with flat, yellowish-brown spines at the apex (0); prophylls without flat
+spines at the apex (1). (murpro)
+93. Partial inflorescences stalked with the stalk parallel to the rachis and nested within the concave rachis surface,
+obscured by the rachis bract, without a pulvinus in axil of rachis and stalk (0); partial inflorescences not or rarely
+stalked, with or rarely without a pulvinus in axil of rachis and partial inflorescence (1). (pedice)
+94. Partial inflorescences recurved with elongate rachis bracts and short, funnel-shaped, equally long rachillasubtending bracts (i.e., rachis bracts and rachilla-subtending bracts strongly dimorphic) (0); partial inflorescences not
+as above (1). (piviti)
+95. Partial inflorescences close together on a short inflorescence, with short rachis bracts, straight rachises, and straight,
+erect, elongate pistillate and short staminate rachillae with short rachilla-subtending bracts, these decreasing in length
+distally (0); partial inflorescences not as above (1). (piinop)
+96. Partial inflorescence rachises markedly thicker than the inflorescence rachis distal to the partial inflorescence (0);
+partial inflorescences not as above (1). (pilobb)
+97. Partial inflorescences usually terminating in a short, sterile rachilla, with rachillae displaced to one side of rachis
+and strongly recurved (0); partial pistillate inflorescences not as above (1). (pidisp)
+98. Partial inflorescences strongly dimorphic, the staminate ones with more numerous, short rachillae with closely
+spaced flowers, the pistillate ones with less numerous, elongate rachillae with distantly spaced flowers (0); partial
+inflorescences not as above (1). (pidimo)
+99. Partial inflorescences staminate and pistillate similar, elongate with numerous, short, equal, recurved rachillae (0);
+partial inflorescences not as above (1). (pirecu)
+100. Partial inflorescences elongate, narrow, with very short, appressed or recurved rachillae (0); partial inflorescences
+not as above (1). (picand)
+101. Rachis bracts brown, membranous, with an elongate, narrow, spiny apex, splitting almost to the base (0); rachis
+bracts not as above (1). (rbcalo)
+102. Rachis bracts much reduced, papery, with one side of the oblique apex extended into a longer limb (0); rachis
+bracts not as above (1). (rbcera)
+103. Rachis bracts somewhat flattened, deeply splitting and becoming tattered and then falling (0); rachis bracts not
+as above (1). (rbtatt)
+104. Rachis bracts slightly flattened, slightly expanded at the apex, relatively short, one side of the oblique apex
+extended into a longer limb (0); rachis bracts slightly flattened, slightly expanded at the apex, relatively short, one
+side of the oblique apex extended into a longer limb, splitting and tattering early (1); rachis bracts not as above (2).
+(rbpalu)
+105. Rachis bracts tubular, somewhat inflated at the apex, with a long, oblique opening (0); rachis bracts not as above
+(1). (rbconi)
+106. Rachis bracts tubular but not closely sheathing the rachis, abruptly narrowed proximally, often brown tomentose,
+rarely densely spiny (0); rachis bracts not as above (1). (rbviti)
+107. Rachis bracts tubular, narrow, persistent, closely sheathing the rachis, sometimes partially splitting if the partial
+inflorescence inserted below the bract apex (0); rachis bracts tubular, narrow, persistent, closely sheathing the rachis,
+splitting and tattering by exsertion of partial inflorescence (1); rachis bracts not as above (2). (rbtubu)
+108. Rachis bracts tubular, overlapping, brown, membranous, becoming deeply split almost to the base (0); rachis
+bracts tubular, overlapping, brown, membranous, becoming deeply split almost to the base and tattering (1); rachis
+bracts not as above (2). (rbanom)
+109. Rachis bracts tubular initially, brown, membranous, usually not spiny, partially enclosing the partial inflorescences
+and becoming open and deeply split, remaining tubular at base only (0); rachis bracts not as above (1). (rbplat)
+110. Rachis bracts tubular, brown, relatively short, overlapping one another (0); rachis bracts not as above (1).
+(rberin)
+111. Rachis bracts tubular, as long as the partial inflorescences, becoming deeply split and tattered and persisting over
+the partial inflorescences (0); rachis bracts not as above (1). (rbpogo)
+112. Rachis bracts swollen, especially near the apex, appearing funnel-shaped, broad, somewhat flattened, persistent
+(0); rachis bracts not as above (1). (rbsiph)
+113. Rachis bracts splitting along their entire length, falling as the rachis elongates, cleanly abscising and leaving a
+conspicuous, circular scar on the rachis (0); rachis bracts splitting along their entire length, not cleanly abscising as the
+rachis elongates, not leaving a conspicuous scar on the rachis (1); rachis bracts splitting most of their length, more or
+less persistent, not leaving a circular scar on the rachis (2); rachis bracts not as above (3). (rbdaem)
+114. Rachis bracts woody, usually blunt or lobed at the apex (0); rachis bracts woody, long acuminate at the apex (1);
+rachis bracts coriaceous, acuminate at the apex (2); rachis bracts coriaceous, caudate at the apex (3); rachis bracts
+coriaceous, splitting and tattering, acuminate at the apex (4); rachis bracts not as above (5). (piptos)
+115. Rachis bracts with reddish-brown, papery, flat spines at the apex (0); rachis bracts without papery spines at the
+apex (1). (papery)
+116. Rachis bracts with a dense fringe of narrow, light brown hairs or spines at the apex (0); rachis bracts not as above
+(1). (fimbri)
+117. Rachillae with a well-developed, proximal, stalked section, parallel to the partial inflorescence axis, obscured by bracts (0); rachillae sessile, rarely stalked (1). (racped)
+118. Rachilla-subtending bracts subtending 2-3 rachillae (0); rachilla-subtending bracts subtending 1 rachilla (1).
+(polyst)
+119. Rachilla-subtending bracts net-like, with numerous, diagonal, crossing fibers (0); rachilla-subtending bracts not
+net-like (1). (retisp)
+120. Rachillae stout and elongate, covered with boat-shaped, smooth-margined, closely overlapping flower bracteoles,
+these obscuring the flower bases (0); rachillae not stout and elongate (1). (raclon)
+121. Rachilla bracteoles densely covered with fine, short spines (0); rachilla bracteoles not covered with fine spines
+(1). (ciliar)
+122. Rachilla bracteoles with swellings intermixed with short, branched hairs or spinules (0); rachilla bracteoles
+without swellings and hairs (1). (laevig)
+123. Rachilla bracteoles uneven, scabrid, with irregular swellings, sometimes also tomentose (0); rachilla bracteoles
+not uneven, scabrid, with irregular swellings (1). (murica)
+124. Staminate inflorescences branched to 1 order (0); staminate inflorescences branched to 2 orders (1); staminate
+inflorescences branched to 3 orders (2); staminate inflorescences branched to 4 orders (3); staminate inflorescences
+branched to 5 orders (4). (staord)
+125. Staminate rachillae slender, drying black, with strongly ribbed bracteoles, often with raphides (0); staminate
+rachillae not slender and drying black (1). (rblack)
+126. Staminate flowers alternately arranged but the rows but not opposite so that one side of rachillae without flowers
+(0); staminate flowers spirally arranged (1); staminate flowers alternately and distichously arranged (2); staminate
+flowers arranged in densely crowded rows, at least in proximal part of partial inflorescence (3); staminate flowers
+distantly and irregularly arranged on angular rachillae (4); staminate flowers alternately, distichously, and distantly
+arranged, borne on short pedicels (5); staminate flowers alternately, distichously, and distantly arranged, borne on short
+pedicels parallel to the rachilla (6). (starrg)
+127. Staminate flowers elongate and curved (0); staminate flowers not elongate (1). (stflel)
+128. Staminate sepals as long as the petals, splitting almost to the base (0); staminate sepals usually shorter than the
+petals, cupular, 3-lobed at the apex (1); staminate sepals as long as petals (splitting not recorded) (2). (sepals)
+129. Staminate sepals large, fleshy, bi-colored (0); staminate sepals not large and fleshy (1). (sepfle)
+130. Stamens exserted from perianth before anthesis (0); stamens not exserted before anthesis (1). (exsert)
+131. Stamens 9-10 (0); stamens 6 (1). (stamen)
+132. Filaments biseriate, not inflexed at the apex (0); filaments uniseriate, inflexed at the apex (1). (filame)
+133. Pistillate inflorescences branched to 1 order (0); pistillate inflorescences branched to 2 orders (1); pistillate
+inflorescences branched to 3 orders (2); pistillate inflorescences branched to 4 orders (3). (pisord)
+134. Pistillate partial inflorescences narrow with approximately equal, short rachillae (0); partial pistillate inflorescences
+not narrow with short rachillae (1). (ppdiva)
+135. Pistillate rachillae subtended by bracts with sparse, small, short, recurved spines (0); pistillate rachilla-subtending
+bracts not spiny (1). (ridley)
+136. Pistillate rachillae with dyads of 1 pistillate and 1 neuter flower (0); pistillate rachillae with at least some triads
+or tetrads of 2 pistillate and 1-2 neuter flowers (1); pistillate rachillae with monads of 1 pistillate flower lacking an
+accompanying neuter flower (2). (tetrad)
+137. Pistillate rachillae terminating in a modified, spine-like pistillate rachilla bracteole (0); pistillate rachillae not
+terminating in a spine-like bracteole (1). (pirasp)
+138. Pistillate dyads alternately arranged along recurved, rarely straight rachillae but not opposite so that one side of
+rachillae without dyads (0); pistillate dyads alternately and distichously arranged (1); pistillate dyads irregularly to
+spirally arranged (2). (cellat)
+139. Pistillate dyads (monads, tetrads) borne on short, stout pedicels (0); pistillate dyads (monads, tetrads) borne on
+slender pedicels (1); pistillate dyads (monads, tetrads) sessile (2). (dyaped)
+140. Pistillate rachilla bracteoles well-developed, obscuring the base of other bracteoles, tubular and concave on one
+side proximally, expanded laterally distally, the neuter flower bracteoles lobed, the pistillate flower bracteoles cupular
+but asymmetric with the neuter flowers borne on one, outer side in an ovate depression (0); pistillate rachilla, neuter
+flower, and pistillate flower bracteoles scarcely developed (1); pistillate rachilla, neuter, flower, and pistillate flower
+bracteoles not as above (2). (bracte)
+141. Pistillate rachilla bracteoles densely reddish-brown and whitish tomentose (0); pistillate rachilla bracteoles not
+reddish-brown and whitish tomentose (1). (pistom)
+142. Neuter flowers borne on scarcely to well-developed pedicels (0); neuter flowers not borne on pedicels (1).
+(neuter)
+143. Pistillate calyces cupular, shallowly 3-lobed (0); pistillate calyces tubular, deeply 3-lobed (1). (cupula)
+144. Fruits globose to ellipsoid (0); fruits ovoid (1). (frshap)
+145. Fruiting perianths tubular (0); fruiting perianths explanate (1); fruiting perianths obconic (2). (perian)
+146. Fruit scales with a flat surface, not channeled (0); fruit scales scarcely to deeply channeled longitudinally (1).
+(scales)
+147. Fruit scales resinous (producing ‘dragon’s blood’) (0); fruit scales not resinous (1). (dragon)
+148. Fruit scales with a uniformly yellow, glossy surface (0); fruit scales not as above (1). (glossy)
+149. Fruit scales fringed with dense, wooly, reddish-brown hairs (0); fruit scales fringed with prominent, flat, brown
+hairs (1); fruit scales not fringed with hairs (2). (fringe)
+150. Seeds 1 per fruit (0); seeds 2-3 per fruit (1). (seeded)
+151. Seeds laterally attached (0); seeds basally attached (1). (attach)
+152. Seeds small, globose to ellipsoid, with a ventral depression, reniform in longitudinal section (0); seeds usually
+large, globose, ellipsoid, or ovoid, not reniform in longitudinal section (1); seeds small to large, pyriform, with a
+ventral protrusion (2); seeds anvil-shaped (3); seeds small, bilobed (4); seeds ellipsoid, hollow in the middle (5); seeds
+ellipsoid with the ventral depression displaced distally giving an asymmetrically lobed seed apex (6); seeds ellipsoid,
+rarely globose, with regular, brain-like grooves radiating from the ventral depression (7); seeds globose to ellipsoid
+with sculpted lateral margins (8); seeds small, ellipsoid, with a narrow ventral depression (9); seeds falcate (10); seeds
+with a rounded, smooth, dorsal side and a 3-ridged, ventral side with the depression almost apical (11). (renifo).
+The side of the seed with the depression is here considered the ventral side, and the opposite side is the dorsal.
+153. Dorsal seed surfaces ridged, pitted, or grooved (0); dorsal seed surfaces smooth (1). (seedsu)
+154. Seeds covered with a non-tanniniferous, slimy sarcotesta (0); seeds covered with a non-tanniniferous, fibrous
+sarcotesta (1); seeds covered with a tanniniferous, non-fibrous sarcotesta (2); seeds covered with a tanniniferous,
+fibrous sarcotesta (3). (sarcot)
+155. Raphe branches 2, bifurcating from the attachment of seed and running along ventral side, sometimes converging
+above (0); raphe branches obscure (1). (raphe)
+156. Endosperm homogeneous or scarcely ruminate (0); endosperm with numerous, deep, pit-like ruminations (1).
+(endosp)
+157. Embryos at or near base of seed (0); embryos lateral in seed (1). (embryo)
+158. Fruit color is taken directly from the specimen labels, although this sometimes leads to discrepancies. Because so
+many different colors are given on labels, it is not possible to score it as in other characters. (frucol)
