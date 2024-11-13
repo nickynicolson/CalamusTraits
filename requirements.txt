@@ -1,2 +1,4 @@
+llm
+llm-groq
 pandas
 pypdf

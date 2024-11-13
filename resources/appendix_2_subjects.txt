@@ -8,10 +8,12 @@ petioles,61,62
 rachis,63,64
 pinnae,65,79
 inflorescences,80,89
-partial infloresences,97,100
-rachi bracts,101,116
+peduncles,90,90
+prophylls,91,92
+partial infloresences,93,100
+rachis bracts,101,116
 rachillae,117,123
-staminate structures,125,129
+staminate structures,124,129
 stamens,130,131
 filaments,132,132
 pistillate structures,133,143

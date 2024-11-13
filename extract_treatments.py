@@ -136,6 +136,7 @@ def main():
     parser = argparse.ArgumentParser(description="Process the text format Calamus monograph to get treatments")
     parser.add_argument('input_file', help="Path to the input PDF file")
     parser.add_argument('target_species_filename', help="Path to the file listing target species names")
+    parser.add_argument('--sentences',action='store_true', help='Explode treatement into its sentences')
     parser.add_argument('output_file', help="Path to the output file")
     
     # Parse arguments
@@ -200,6 +201,11 @@ def main():
     # Display the result
     print(df_treatments)
 
+    if args.sentences:
+       df_treatments['sentences'] = df_treatments['line_cleaned'].apply(lambda s: re.split(r'[.;]\s',s))
+       df_treatments = df_treatments[['taxon_name','sentences']].explode('sentences')
+       df_treatments.rename(columns={'sentences':'sentence'}, inplace=True)
+      
     df_treatments.to_csv(args.output_file, index=False)
 
 if __name__ == "__main__":
