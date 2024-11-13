@@ -7,6 +7,7 @@ def main():
     parser = argparse.ArgumentParser(description="Process an appendix text file to structured (CSV) data file.")
     parser.add_argument('input_file', help="Path to the input text file")
     parser.add_argument('input_file_appendix_metadata', help="Path to the input CSV appendix metadata text file")
+    parser.add_argument('--quantitative',action='store_true', help='Process quantitative traits')
     parser.add_argument('output_file', help="Path to the output CSV file")
     
     # Parse arguments
@@ -38,7 +39,10 @@ def main():
     # Each line consists of a number, description and column header
     for corrected_line in corrected_lines:
         # Define pattern
-        pattern = r"^(?P<number>\d+)\.\s*(?P<description>.+?)\.\s*\((?P<code>[a-z]+)\)(?P<extra>\. .*)?$"
+        if args.quantitative:
+            pattern = r"(?P<number>\d+)\.\s+(?P<description>[\w\s,\-]+)(?:\s+\((?P<unit>\w+)\))?;\s+data taken from\s+(?P<source>[\w\s,]+)\.\s+\((?P<abbreviation>\w+)\)"
+        else:
+            pattern = r"^(?P<number>\d+)\.\s*(?P<description>.+?)\.\s*\((?P<code>[a-z]+)\)(?P<extra>\. .*)?$"
         # Apply the regex
         match = re.match(pattern, corrected_line)
         # Save the data extracted from the regex in dict form to the traitdata list 

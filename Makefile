@@ -1,6 +1,6 @@
 data/appendix_1.txt: clean_appendix.py resources/appendix_1.txt resources/appendix_1_subjects.txt
 	mkdir -p data
-	python $^ $@
+	python $^ --quantitative $@
 
 data/appendix_2.txt: clean_appendix.py resources/appendix_2.txt resources/appendix_2_subjects.txt
 	mkdir -p data
