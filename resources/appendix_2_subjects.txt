@@ -1,0 +1,20 @@
+subject,trait_col_index_min,trait_col_index_max
+stems,1,2
+leaf sheaths,3,4
+leaf sheath spines,5,36
+ocreas,37,59
+flagella,60,60
+petioles,61,62
+rachis,63,64
+pinnae,65,79
+inflorescences,80,89
+partial infloresences,97,100
+rachi bracts,101,116
+rachillae,117,123
+staminate structures,125,129
+stamens,130,131
+filaments,132,132
+pistillate structures,133,143
+fruits,144,149
+seeds,150,157
+fruit color,158,158

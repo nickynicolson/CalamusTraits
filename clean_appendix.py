@@ -6,6 +6,7 @@ def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Process an appendix text file to structured (CSV) data file.")
     parser.add_argument('input_file', help="Path to the input text file")
+    parser.add_argument('input_file_appendix_metadata', help="Path to the input CSV appendix metadata text file")
     parser.add_argument('output_file', help="Path to the output CSV file")
     
     # Parse arguments
@@ -41,10 +42,29 @@ def main():
         # Apply the regex
         match = re.match(pattern, corrected_line)
         # Save the data extracted from the regex in dict form to the traitdata list 
-        traitdata.append(match.groupdict())
+        this_traitdata = match.groupdict()
+        this_traitdata['number'] = int(this_traitdata['number']) 
+        traitdata.append(this_traitdata)
 
     # Make a pandas dataframe and save to file
     df = pd.DataFrame(traitdata)
+
+    df_meta = pd.read_csv(args.input_file_appendix_metadata)
+
+    trait_meta_data = []
+
+    for _, row in df_meta.iterrows():
+        # Generate a list of indices for each subject based on the range
+        indices = range(row['trait_col_index_min'], row['trait_col_index_max'] + 1)
+        for index in indices:
+            # Append each row for each index
+            trait_meta_data.append({'subject': row['subject'], 'number': index})
+
+    # Convert the list to a DataFrame
+    df_meta = pd.DataFrame(trait_meta_data)
+
+    df = pd.merge(left=df, right=df_meta, left_on='number',right_on='number')
+
     df.to_csv(args.output_file, index=False)
 
 if __name__ == "__main__":
