@@ -75,15 +75,38 @@ specimen (_Peters s.n._) is also unusual in its spiny leaf sheaths, small fruits
 ## Process
 
 ```mermaid
-flowchart LR
-    A[Monograph] --> B{Extract useful sections of the monograph}
+flowchart TD
+    A[Monograph] --> B[Extract Relevant Sections]
+
+    subgraph Monograph [ ]
+    A
+    end
+
+    style Monograph fill:#E0DBEC,stroke:#C8BDDE,stroke-width:2px
+
     B --> C[Appendix 1]
     B --> D[Appendix 2]
     B --> E[Treatment Descriptions]
-    C --> F{Large Language Model}
+
+    subgraph Extracted_Sections [ ]
+        C
+        D
+        E
+    end
+
+    style Extracted_Sections fill:#E0DBEC,stroke:#C8BDDE,stroke-width:2px
+
+    C --> F[Process with Large Language Model]
     D --> F
     E --> F
-    F --> G[Structured trait information]
+
+    subgraph Trait_info [ ]
+    G 
+    end 
+
+    style Trait_info fill:#E0DBEC,stroke:#C8BDDE,stroke-width:2px
+
+    F --> G[Structured Trait Information]
 ```
 
 ## How to run the scripts
