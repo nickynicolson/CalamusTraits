@@ -72,6 +72,20 @@ is said on the label to come from Sandakan in Sabah, far outside the range of ot
 specimen (_Peters s.n._) is also unusual in its spiny leaf sheaths, small fruits, and habitat. The label records the habitat as
 “seasonally inundated forest … flooded 4 to 6 months a year”.
 
+## Process
+
+```mermaid
+flowchart LR
+    A[Monograph] --> B{Extract useful sections of the monograph}
+    B --> C[Appendix 1]
+    B --> D[Appendix 2]
+    B --> E[Treatment Descriptions]
+    C --> F{Large Language Model}
+    D --> F
+    E --> F
+    F --> G[Structured trait information]
+```
+
 ## How to run the scripts
 
 This assumes that you have cloned the repository to a machine where you have: (a) a local installation of Python, (b) the build tool `make` and (c) a command line terminal program to run the following commands:
