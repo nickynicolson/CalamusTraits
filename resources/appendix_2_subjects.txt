@@ -10,7 +10,7 @@ pinnae,65,79
 inflorescences,80,89
 peduncles,90,90
 prophylls,91,92
-partial infloresences,93,100
+partial inflorescences,93,100
 rachis bracts,101,116
 rachillae,117,123
 staminate structures,124,129

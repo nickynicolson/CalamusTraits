@@ -67,7 +67,7 @@ def main():
     # Convert the list to a DataFrame
     df_meta = pd.DataFrame(trait_meta_data)
 
-    df = pd.merge(left=df, right=df_meta, left_on='number',right_on='number').drop_duplicates(subset='number')
+    df = pd.merge(left=df, right=df_meta, left_on='number',right_on='number')
 
     df.to_csv(args.output_file, index=False)
 

@@ -1,8 +1,8 @@
 subject,trait_col_index_min,trait_col_index_max
 stems,1,2
-petioles,3,4
+petioles,3,3
 rachis,4,5
 pinnae,6,8
-staminate structures,7,10
+staminate structures,9,10
 pistillate structures,11,12
 fruits,13,14
