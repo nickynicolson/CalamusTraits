@@ -1,6 +1,7 @@
 import llm
 import pandas as pd
 import re
+import json
 
 # Choose model
 model = llm.get_model("groq-llama3.1-70b")
@@ -21,8 +22,8 @@ for taxon_name in df_sentences.taxon_name.unique():
     taxon_dict = dict()
 
     for subject in df_app2.subject.to_list():
-        # Print just the relevant columns
-        #print(df_app2[df_app2.subject==subject][["description", "code"]])
+        # Print each sentence and the corresponding code for each taxon
+        # print(df_app2[df_app2.subject==subject][["description", "code"]])
         # Make a markdown table using those column headers and print
         appendix_2_subject = df_app2[df_app2.subject==subject][["description", "code"]].to_markdown(index=False)
         #print(appendix_2_subject)
@@ -38,12 +39,14 @@ for taxon_name in df_sentences.taxon_name.unique():
                 prompt = f"""
                     You are an expert botanist. We're interested in characteristics about {subject} we want to extract JSON format data as defined in the table below
                     {appendix_2_subject}. Use abbreviation as your key. Your input sentence is "{sentence_subject}". Abbreviations in parentheses at the end of each variable are the values to be assigned to the subjects. The states of the variables here are scored as ‘(0)’ or ‘(1)’ etc.
-                    Do not fabricate data and ensure the values correspond to the correct abbreviation, if values for traits are not recored, leave blank. Respond only with JSON.
+                    Do not fabricate data and ensure the values correspond to the correct abbreviation, if values for traits are not recored, leave blank. Your answer must be as complete and accurate as possible. Ensure your output is strictly in valid JSON format, and do not include any extra text.
                     """
 
                 response = model.prompt(prompt, temperature=0)
                 output = response.text()
-                print(output)
+                #print(output)
 
-
-# Need to fix so output isn't repeated lots of times (or just clean the output somehow)
+                sentence_dict = json.loads(output)
+                taxon_dict.update(sentence_dict)
+            
+    print(taxon_dict)
