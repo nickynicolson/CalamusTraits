@@ -31,9 +31,6 @@ for taxon_name in df_sentences.taxon_name.unique():
         for i, row in df_sentences[(df_sentences.category==subject) & (df_sentences.taxon_name==taxon_name)].iterrows():
             sentence_subject = row["sentence"]
 
-            # Print the subjects for each sentence per taxon_name
-            #print(f"Current subject: {subject}")
-
             if re.match('stems', subject):
 
                 prompt = f"""
