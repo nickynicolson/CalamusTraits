@@ -2,6 +2,7 @@ import llm
 import pandas as pd
 import re
 import json
+from time import sleep
 
 # Choose model
 model = llm.get_model("groq-llama3.1-70b")
@@ -21,29 +22,36 @@ for taxon_name in df_sentences.taxon_name.unique():
 
     taxon_dict = dict()
 
-    for subject in df_app2.subject.to_list():
-        # Print each sentence and the corresponding code for each taxon
-        # print(df_app2[df_app2.subject==subject][["description", "code"]])
-        # Make a markdown table using those column headers and print
-        appendix_2_subject = df_app2[df_app2.subject==subject][["description", "code"]].to_markdown(index=False)
-        #print(appendix_2_subject)
-        # Iterate through the rows in df_sentences that match the current subject and taxon_name
-        for i, row in df_sentences[(df_sentences.category==subject) & (df_sentences.taxon_name==taxon_name)].iterrows():
-            sentence_subject = row["sentence"]
+    for subject in df_app2.subject.unique():
+        subject_para = " ".join(df_sentences[(df_sentences.category==subject) & (df_sentences.taxon_name==taxon_name)]['sentence'].to_list())
+        print(subject, subject_para)
 
-            if re.match('stems', subject):
+    
+        appendix_2_subject = df_app2[df_app2.subject==subject][["description", "code"]]
+        for i, row_outer in appendix_2_subject.iterrows():
 
-                prompt = f"""
-                    You are an expert botanist. We're interested in characteristics about {subject} we want to extract JSON format data as defined in the table below
-                    {appendix_2_subject}. Use abbreviation as your key. Your input sentence is "{sentence_subject}". Abbreviations in parentheses at the end of each variable are the values to be assigned to the subjects. The states of the variables here are scored as ‘(0)’ or ‘(1)’ etc.
-                    Do not fabricate data and ensure the values correspond to the correct abbreviation, if values for traits are not recored, leave blank. Your answer must be as complete and accurate as possible. Ensure your output is strictly in valid JSON format, and do not include any extra text.
-                    """
+            prompt = f"""
+                You are an expert botanist. You can extract and encode data from text. 
+                You are supplied with the description of a species ("description"), a code for a trait ("code") and a set of rules ("rules") about the values used to encode the trait. 
+                Make a JSON dictionary with the key code and a numeric value built by applying the rules to the description.
+                Do not fabricate data and ensure the values correspond to the correct code. If you cannot score the variable, set the value to none. Your answer must be as complete and accurate as possible. Ensure your output is strictly in valid JSON format, and do not include any extra text.
+                description: {subject_para}\n
+                code: {row_outer["code"]}\n
+                rules: {row_outer["description"]}\n
+                """
 
-                response = model.prompt(prompt, temperature=0)
-                output = response.text()
-                #print(output)
+            print(prompt)
 
+            response = model.prompt(prompt, temperature=0)
+            output = response.text()
+            print(output)
+
+            try:
                 sentence_dict = json.loads(output)
                 taxon_dict.update(sentence_dict)
+            except:
+                print(output)
+            
+            sleep(2)
             
     print(taxon_dict)
