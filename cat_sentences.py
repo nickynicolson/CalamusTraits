@@ -41,7 +41,8 @@ def main():
     system = "You are an expert botanist."
     prompt = """Categorise this sentence \"{}\" into one of 
     the following categories {}.
-    Respond only with the category name."""
+    Respond only with the category name. 
+    The category name that you return MUST be one of the categories supplied"""
 
     # Get all the sentences that we want to categorise
     sentences = df.sentence.to_list()
