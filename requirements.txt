@@ -2,3 +2,4 @@ llm
 llm-groq
 pandas
 pypdf
+transformers
