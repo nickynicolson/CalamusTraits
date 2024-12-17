@@ -1,5 +1,6 @@
 llm
 llm-groq
+groq
 pandas
 pypdf
 transformers
