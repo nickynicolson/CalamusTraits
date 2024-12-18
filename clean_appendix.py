@@ -47,29 +47,33 @@ def main():
         match = re.match(pattern, corrected_line)
         # Save the data extracted from the regex in dict form to the traitdata list 
         this_traitdata = match.groupdict()
+        # Convert the number key from a str to an int
         this_traitdata['number'] = int(this_traitdata['number']) 
         traitdata.append(this_traitdata)
 
     # Make a pandas dataframe and save to file
-    df = pd.DataFrame(traitdata)
+    df_appendices = pd.DataFrame(traitdata)
 
-    df_meta = pd.read_csv(args.input_file_appendix_metadata)
+    df_appendices_meta = pd.read_csv(args.input_file_appendix_metadata)
 
+    # Creates a list to contain subject and the number of the row this subject is in
     trait_meta_data = []
 
-    for _, row in df_meta.iterrows():
-        # Generate a list of indices for each subject based on the range
+    # Iterate through each row in df_appendices_meta to...
+    for _, row in df_appendices_meta.iterrows():
+        # ...Generate a list of indices for each subject based on the range
         indices = range(row['trait_col_index_min'], row['trait_col_index_max'] + 1)
         for index in indices:
             # Append each row for each index
             trait_meta_data.append({'subject': row['subject'], 'number': index})
 
     # Convert the list to a DataFrame
-    df_meta = pd.DataFrame(trait_meta_data)
+    df_appendices_meta = pd.DataFrame(trait_meta_data)
 
-    df = pd.merge(left=df, right=df_meta, left_on='number',right_on='number')
+    df_appendices = pd.merge(left=df_appendices, right=df_appendices_meta, left_on='number',right_on='number')
 
-    df.to_csv(args.output_file, index=False)
+    # Output as a csv file
+    df_appendices.to_csv(args.output_file, index=False)
 
 if __name__ == "__main__":
     main()

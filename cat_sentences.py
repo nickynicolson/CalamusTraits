@@ -3,6 +3,7 @@ import pandas as pd
 import llm 
 from time import sleep
 
+# Define a function that uses an LLM to categorise each sentence 
 def categoriseSentence(s, subjects, model):
     category = None
     # Set up system and user prompts
@@ -29,12 +30,12 @@ def main():
     args = parser.parse_args()
 
     # Read sentence data
-    df = pd.read_csv(args.input_file_sentences)
+    sentences_df = pd.read_csv(args.input_file_sentences)
 
     # Read appendix subjects, which we are using as metadata (the
     # subjects are used as the potential categories for the sentences) 
-    df_meta = pd.read_csv(args.input_file_appendix)
-    subjects = df_meta.subject.to_list()
+    df_appendices_meta = pd.read_csv(args.input_file_appendix)
+    subjects = df_appendices_meta.subject.to_list()
 
     # Set up model and prompts
     model = llm.get_model("groq-llama3-70b")
@@ -45,8 +46,8 @@ def main():
     The category name that you return MUST be one of the categories supplied"""
 
     # Get all the sentences that we want to categorise
-    sentences = df.sentence.to_list()
-    # Make a dict to hold the mapping
+    sentences = sentences_df.sentence.to_list()
+    # Make a dict to hold the mapping ({'sentence': 'subject'})
     sentences_mapper = dict()
     # Loop over sentences, sending each to model for categorisation
     for sentence in sentences:
@@ -57,9 +58,11 @@ def main():
         else:
             print('{} not found in {}'.format(response, subjects))
 
-    df['category'] = df.sentence.map(sentences_mapper)
+    # Adds category column to sentences_df 
+    sentences_df['category'] = sentences_df.sentence.map(sentences_mapper)
 
-    df.to_csv(args.output_file)
+    # Converts the sentences dataframe to a csv; this is the output file
+    sentences_df.to_csv(args.output_file)
 
 if __name__ == "__main__":
     main()
