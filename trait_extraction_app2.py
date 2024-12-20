@@ -8,10 +8,12 @@ from time import sleep
 from transformers import AutoTokenizer
 import textwrap
 
+# Define a function to count the number of tokens in the prompt
 def count_tokens(prompt, model_name="gpt2"):
     # Load the tokenizer for the specified model
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokens = tokenizer.encode(prompt)
+    # Return the number of tokens
     return len(tokens)
 
 # Choose model
@@ -19,38 +21,44 @@ model_name = "llama-3.3-70b-versatile"
 
 client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),  # GROQ API key is set as an environment variable
-    max_retries=5,
+    max_retries=5,  # Specifies the max. number of retries if the request fails
 )
 
-# Read the files and enter the prompt
+# Read the files
 with open("data/appendix_2.txt", "r") as appendix_2:
     appendix_2 = appendix_2.read()
 
 with open("data/sentences_cat.txt", "r") as sentences_cat:
     sentences_cat = sentences_cat.read()
 
+# Convert the csv files into a pandas dataframes
 df_sentences = pd.read_csv("data/sentences_cat.txt")
 df_app2 = pd.read_csv("data/appendix_2.txt")
 
+# Create an empty dataframe to store the output
 df_output = pd.DataFrame()
 
+# Iterate over each unique species
 for taxon_name in df_sentences.taxon_name.unique():
     print(taxon_name)
 
     taxon_dict = dict()
     taxon_dict['taxon_name'] = taxon_name
 
+    # Iterate over each subject in appendix_2 df
     for subject in df_app2.subject.unique():
+        # Sentences about a specific species and subject and joined together into a paragraph
         subject_para = " ".join(df_sentences[(df_sentences.category==subject) & (df_sentences.taxon_name==taxon_name)]['sentence'].to_list())
-        # print(subject, subject_para)
-
+        print(subject, subject_para)
         # Batch size
-        batch_size = 10
+        batch_size = 10    # 10 Rows per batch
 
+        # Filter df_app2 to get rows matching current subject, selecting only the 'code' and 'description' columns & rename these columns
         df_app2_subject = df_app2[df_app2.subject==subject][["code", "description"]].rename(columns={'description':'rules'})
         # Split the DataFrame into batches of length batch_size using list comprehension
         batches = [df_app2_subject[i:i + batch_size] for i in range(0, len(df_app2_subject), batch_size)]
 
+        # Iterates through each batch and coverts to markdown table
         for i, batch in enumerate(batches):
             # print(f"Batch {i + 1}:\n{batch}\n")
             appendix_2_subject_batch = batch.to_markdown(index=False)
