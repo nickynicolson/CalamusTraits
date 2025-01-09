@@ -81,7 +81,7 @@ specimen (_Peters s.n._) is also unusual in its spiny leaf sheaths, small fruits
 ## Process
 
 ```mermaid
-flowchart TD
+flowchart LR
     classDef rounded fill:#fff,stroke:#000,stroke-width:2px,color:#000,rx:10,ry:10;
     
     A["**Botanical Monograph** <br> <small>A Revision of *Calamus* <br> (Henderson, 2020)<small>"] 
