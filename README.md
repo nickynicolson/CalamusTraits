@@ -6,13 +6,19 @@ Calamus was recently monographed in Henderson, A., 2020. A revision of Calamus (
 
 ## Timeline
 
-- 2024-09-19 [NN](https://github.com/nickynicolson) presented "New tools for taxonomy" to the Integrated Monography group at Kew, demonstrating [echinopscis](https://echinopscis.github.io/) and large language models, including associated projects run by [Eren Karabey](https://github.com/erenkarabey) ([KewBridge/specimens2illustrations](https://github.com/KewBridge/specimens2illustrations)) and [Young Jun Lee](https://github.com/yjkiwilee). Follow-up discussion focussed on how we could use these tools / techniques in the re-curation of *Calamus*.
-- 2024-09-19 Ben Kuhnhaeuser shared data on *Ceratolobus*, a distinct clade with *Calamus*:
-> I’m sending through a few resources on Ceratolobus, a morphologically and phylogenetically well-defined clade and former genus that is now subsumed in Calamus. It contains six species, C. concolor, C. disjunctus, C. glaucescens, C. hallierianus, C. pseudoconcolor,  and C. subangulatus. All species are described in Henderson 2020, which is accompanied by a supplementary data matrix: https://phytotaxa.mapress.com/pt/article/view/phytotaxa.445.1.1. Bill tells me that the supplementary is also available on Zenodo (although I didn’t manage to track it down there) and as such in the public domain. I’m attaching here only the Ceratolobus rows of the spreadsheet, which is only a tiny fraction of the entire dataset. The column abbreviations are explained in the main manuscript in appendices I (p. 478) and II (pp. 479-486). I think it makes most sense for you to mine the treatment of each species directly from the pdf by search for the species names, instead of me sending you screenshots, but I’m just attaching an example treatment for one at the bottom of the email so that you can get an idea what the treatments look like.
+- **2024-09-19** [NN](https://github.com/nickynicolson) presented "New tools for taxonomy" to the Integrated Monography group at Kew, demonstrating [echinopscis](https://echinopscis.github.io/) and large language models, including associated projects run by [Eren Karabey](https://github.com/erenkarabey) ([KewBridge/specimens2illustrations](https://github.com/KewBridge/specimens2illustrations)) and [Young Jun Lee](https://github.com/yjkiwilee). Follow-up discussion focussed on how we could use these tools / techniques in the re-curation of *Calamus*.
+- **2024-09-19** Ben Kuhnhaeuser shared data on *Ceratolobus*, a distinct clade with *Calamus*:
+> I’m sending through a few resources on *Ceratolobus*, a morphologically and phylogenetically well-defined clade and former genus that is now subsumed in Calamus. It contains six species, *C. concolor, C. disjunctus, C. glaucescens, C. hallierianus, C. pseudoconcolor*,  and *C. subangulatus*.
+>
+> All species are described in Henderson 2020, which is accompanied by a supplementary data matrix: https://phytotaxa.mapress.com/pt/article/view/phytotaxa.445.1.1.
+>
+> The supplementary is also available on Zenodo and as such in the public domain. The Ceratolobus rows of the spreadsheet are only a tiny fraction of the entire dataset. The column abbreviations are explained in the main manuscript in appendices I (p. 478) and II (pp. 479-486).
+>
 > We currently have a phylogeny including four of these species, which the samples being linkable to herbarium specimens if that is of interest.
+>
 > ![image](https://github.com/user-attachments/assets/1cec8b01-7702-457c-9e0d-0a16ca481d54)
-> 
-> Does that suffice for a start? Further down the line, we can also approach sourcing images (in situ photographs and technical drawings) and digging out previous taxonomic treatments of these species, e.g. in field guides.
+>
+> Further down the line, we can also approach sourcing images (in situ photographs and technical drawings) and digging out previous taxonomic treatments of these species, e.g. in field guides.
 
 ## Sample treatment
 
@@ -76,37 +82,18 @@ specimen (_Peters s.n._) is also unusual in its spiny leaf sheaths, small fruits
 
 ```mermaid
 flowchart TD
-    A[Monograph] --> B[Extract Relevant Sections]
+    classDef rounded fill:#fff,stroke:#000,stroke-width:2px,color:#000,rx:10,ry:10;
+    
+    A["**Botanical Monograph** <br> <small>A Revision of *Calamus* <br> (Henderson, 2020)<small>"] 
+        ==> 
+        B[**Extract Relevant Sections**<br><small>Appendix 1<br>Appendix 2<br>Species Descriptions</small>]
 
-    subgraph Monograph [ ]
-    A
-    end
+    B ==> C[**Process with Large Language Model**]
 
-    style Monograph fill:#E0DBEC,stroke:#C8BDDE,stroke-width:2px
+    C ==> D[**Structured Trait Information**]
 
-    B --> C[Appendix 1]
-    B --> D[Appendix 2]
-    B --> E[Treatment Descriptions]
+    class A,B,C,D rounded;
 
-    subgraph Extracted_Sections [ ]
-        C
-        D
-        E
-    end
-
-    style Extracted_Sections fill:#E0DBEC,stroke:#C8BDDE,stroke-width:2px
-
-    C --> F[Process with Large Language Model]
-    D --> F
-    E --> F
-
-    subgraph Trait_info [ ]
-    G 
-    end 
-
-    style Trait_info fill:#E0DBEC,stroke:#C8BDDE,stroke-width:2px
-
-    F --> G[Structured Trait Information]
 ```
 
 ## How to run the scripts
