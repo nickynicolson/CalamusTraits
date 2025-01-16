@@ -4,7 +4,7 @@ petioles,3,3
 rachis,4,4
 pinnae,5,8
 inflorescences,9,9
-staminate structures,10,10
+rachillae,10,10
 inflorescences,11,11
 rachillae,12,12
 fruits,13,14
