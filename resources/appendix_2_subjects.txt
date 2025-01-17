@@ -13,10 +13,17 @@ prophylls,91,92
 partial inflorescences,93,100
 rachis bracts,101,116
 rachillae,117,123
-staminate structures,124,129
+inflorescences,124,124
+rachillae, 125,125
+inflorescences, 126,127
+sepals,128,129
 stamens,130,131
 filaments,132,132
-pistillate structures,133,143
-fruits,144,149
+inflorescences,133,133
+partial inflorescences,134,134
+rachillae,135,142
+sepals,143,143
+inflorescences,144,144
+fruits, 145,149
 seeds,150,157
 fruit color,158,158
