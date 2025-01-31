@@ -68,7 +68,7 @@ term_mappings = term_mapping = {
     "flagella": "Flagellum",
     "Filaments": "Filament",
     "flowers": "Flower",
-    "Neuter flowers": "Neuter flower",
+    "Neuter flowers": "Pistillate rachilla",
     "pistillate calyces": "Pistillate calyx",
     "Pistillate calyces": "Pistillate calyx",
     "Pistillate dyads": "Pistillate dyads"
