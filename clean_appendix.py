@@ -54,23 +54,30 @@ def main():
     # Make a pandas dataframe and save to file
     df_appendices = pd.DataFrame(traitdata)
 
-    df_appendices_meta = pd.read_csv(args.input_file_appendix_metadata)
 
-    # Creates a list to contain subject and the number of the row this subject is in
-    trait_meta_data = []
+    df_appendices['subject'] = [None]*len(df_appendices)
 
-    # Iterate through each row in df_appendices_meta to...
-    for _, row in df_appendices_meta.iterrows():
-        # ...Generate a list of indices for each subject based on the range
-        indices = range(row['trait_col_index_min'], row['trait_col_index_max'] + 1)
-        for index in indices:
-            # Append each row for each index
-            trait_meta_data.append({'subject': row['subject'], 'number': index})
+    pinna_filter = (df_appendices['description'].str.contains('pinna'))
+    df_appendices.loc[pinna_filter, 'subject'] = 'Pinnae'
 
-    # Convert the list to a DataFrame
-    df_appendices_meta = pd.DataFrame(trait_meta_data)
+    multi_word_starts = []
+    if args.quantitative:
+        multi_word_starts = ['Staminate','Pistillate']
 
-    df_appendices = pd.merge(left=df_appendices, right=df_appendices_meta, left_on='number',right_on='number')
+    else:
+        seed_filter = (df_appendices['description'].str.contains('dorsal seed surfaces'))
+        df_appendices.loc[seed_filter, 'subject'] = 'Seeds'
+        multi_word_starts = ['Pistillate partial','Pistillate', 'Partial', 'Staminate', 'Neuter','Rachilla-subtending','Proximalmost','Distalmost','Fruiting']
+
+    for multi_word_start in multi_word_starts:
+        multi_word_start_len = len(multi_word_start.split(' '))
+        multi_word_filter = (df_appendices['description'].str.startswith(multi_word_start) & df_appendices.subject.isnull())
+        df_appendices.loc[multi_word_filter, 'subject'] = df_appendices[multi_word_filter].description.apply(lambda s: ' '.join(s.split(' ')[0:multi_word_start_len+1]))
+
+    filter = (df_appendices.subject.isnull())
+    df_appendices.loc[filter, 'subject'] = df_appendices[filter].description.apply(lambda s: s.split(' ')[0])
+
+    print(df_appendices.groupby('subject').size())
 
     # Output as a csv file
     df_appendices.to_csv(args.output_file, index=False)
