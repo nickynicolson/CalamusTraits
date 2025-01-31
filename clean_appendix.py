@@ -6,7 +6,6 @@ def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Process an appendix text file to structured (CSV) data file.")
     parser.add_argument('input_file', help="Path to the input text file")
-    parser.add_argument('input_file_appendix_metadata', help="Path to the input CSV appendix metadata text file")
     parser.add_argument('--quantitative',action='store_true', help='Process quantitative traits')
     parser.add_argument('output_file', help="Path to the output CSV file")
     
