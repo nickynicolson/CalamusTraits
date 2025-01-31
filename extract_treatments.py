@@ -222,6 +222,11 @@ def main():
       df_treatments.loc[filter, 'subject'] = df_treatments[filter].sentence.apply(lambda s: s.split(' ')[0])
       print(df_treatments.groupby('subject').size())
 
+      # Now standardise the subjects
+      from term_mapper import term_mapping
+      df_treatments['subject_standardised'] = df_treatments.subject.map(term_mapping)
+      print(df_treatments.groupby('subject_standardised').size())
+
     df_treatments.to_csv(args.output_file, index=False)
 
 if __name__ == "__main__":

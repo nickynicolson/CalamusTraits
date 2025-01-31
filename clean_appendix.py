@@ -79,6 +79,11 @@ def main():
 
     print(df_appendices.groupby('subject').size())
 
+    # Now standardise the subjects
+    from term_mapper import term_mapping
+    df_appendices['subject_standardised'] = df_appendices.subject.map(term_mapping)
+    print(df_appendices.groupby('subject_standardised').size())
+
     # Output as a csv file
     df_appendices.to_csv(args.output_file, index=False)
 
