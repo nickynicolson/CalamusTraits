@@ -5,16 +5,14 @@ import json
 from time import sleep
 
 # Choose model
-model = llm.get_model("groq-llama3.1-70b")
+model = llm.get_model("groq-llama-3.3-70b")
 
 # Read the files
-df_sentences = pd.read_csv("data/sentences_cat.txt")
+df_sentences = pd.read_csv("data/sentences.txt")
 df_app1 = pd.read_csv("data/appendix_1.txt")
 
-# print(df_app1)
-
-print("Taxon names:", df_sentences.taxon_name.unique()) 
-print("Subjects:", df_app1.subject.to_list())
+# print("Taxon names:", df_sentences.taxon_name.unique()) 
+# print("Subjects:", df_app1.subject.to_list())
 
 df_output = pd.DataFrame()
 
@@ -24,14 +22,14 @@ for taxon_name in df_sentences.taxon_name.unique():
     taxon_dict = dict()
     taxon_dict['taxon_name'] = taxon_name
 
-    for subject in df_app1.subject.unique():
-        mask = (df_sentences.category==subject) & (df_sentences.taxon_name==taxon_name) & (df_sentences.sentence.str.contains("[0-9]"))
+    for subject in df_app1.subject_standardised.unique():
+        mask = (df_sentences.subject_standardised==subject) & (df_sentences.taxon_name==taxon_name) & (df_sentences.sentence.str.contains("[0-9]"))
         subject_para = " ".join(df_sentences[mask]['sentence'].to_list())
         #print(subject, subject_para)
 
-        appendix_1_subject = df_app1[df_app1.subject==subject][["description", "abbreviation"]]
+        appendix_1_subject = df_app1[df_app1.subject_standardised==subject][["description", "abbreviation"]]
         for i, row in appendix_1_subject.iterrows():
-            
+
             prompt = f"""
                 You are an expert botanist. You can extract and encode data from text. 
                 You are supplied with the description of a species ("description"), a code for a trait ("abbreviation").
@@ -69,7 +67,7 @@ for taxon_name in df_sentences.taxon_name.unique():
             except:
                 print(output)
 
-            sleep(3)
+            sleep(10) # Avoid rate limits
             
     print(json.dumps(taxon_dict, indent=4)) # Makes the output easier to read
     print('-'*80)
@@ -79,4 +77,4 @@ for taxon_name in df_sentences.taxon_name.unique():
     df_output = pd.concat([df_output, df_taxon])
 
 print(df_output)
-df_output.to_csv('data/extracted_traits_app1.csv', index=False)
+df_output.to_csv('data/quantitative_trait_extraction.csv', index=False)
