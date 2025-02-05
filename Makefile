@@ -16,11 +16,17 @@ data/sentences.txt: extract_treatments.py resources/calamus_monograph.pdf resour
 	mkdir -p data
 	python $^ --sentences $@
 
+data/formatted_supp_data.csv: format_supplementary_data.py resources/Ceratolobus.xlsx
+	mkdir -p data
+	python $^ $@
+
 treatments: data/treatments.txt
 
 sentences: data/sentences.txt
 
-all: data/appendix_1.txt data/appendix_2.txt data/treatments.txt data/sentences.txt
+supp: data/formatted_supp_data.csv
+
+all: data/appendix_1.txt data/appendix_2.txt data/treatments.txt data/sentences.txt data/formatted_supp_data.csv
 
 clean:
 	rm -rf data
