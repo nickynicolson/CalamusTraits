@@ -1,8 +1,12 @@
 # CalamusTraits
 
+## Overview
+
 This project explores transitioning between trait matrices and textual descriptions of species, using a subset of the palm genus *Calamus*.
 
 Calamus was recently monographed in Henderson, A., 2020. A revision of Calamus (Arecaceae, Calamoideae, Calameae, Calaminae). Phytotaxa 445, 1–656. [doi: 10.11646/phytotaxa.445.1.1](https://doi.org/10.11646/phytotaxa.445.1.1)
+
+[Content Summary](https://github.com/KewBridge/CalamusTraits/blob/main/Content_Summary.md) - Shows how the scripts work together and what each file in the repo does.
 
 ## Timeline
 
@@ -80,6 +84,8 @@ specimen (_Peters s.n._) is also unusual in its spiny leaf sheaths, small fruits
 
 ## Process
 
+### Extracting Traits from the Monograph
+
 ```mermaid
 flowchart LR
     classDef rounded fill:#fff,stroke:#000,stroke-width:2px,color:#000,rx:10,ry:10;
@@ -93,7 +99,21 @@ flowchart LR
     C ==> D[**Structured Trait Information**]
 
     class A,B,C,D rounded;
+```
 
+### Creating Species Descriptions for a Monograph
+
+```mermaid
+flowchart LR
+    classDef rounded fill:#fff,stroke:#000,stroke-width:2px,color:#000,rx:10,ry:10;
+    
+    A[**Structured Trait Information**]
+        ==>
+        B[**Process with Large Language Model**]
+    
+    B ==> C[**Species Descriptions**]
+
+    class A,B,C,D rounded;
 ```
 
 ## How to run the scripts
