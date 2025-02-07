@@ -59,6 +59,9 @@ def main():
     pinna_filter = (df_appendices['description'].str.contains('pinna'))
     df_appendices.loc[pinna_filter, 'subject'] = 'Pinnae'
 
+    rachis_apices_filter = (df_appendices['description'].str.contains('rachis apices', case=False))
+    df_appendices.loc[rachis_apices_filter, 'subject'] = 'Rachis'
+    
     multi_word_starts = []
     if args.quantitative:
         multi_word_starts = ['Staminate','Pistillate']
