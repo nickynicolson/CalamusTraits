@@ -4,3 +4,4 @@ groq
 pandas
 pypdf
 transformers
+openpyxl
