@@ -1,39 +1,37 @@
-import os
-from groq import Groq
-import groq
 import pandas as pd
-import re
 import json
-from time import sleep
-from transformers import AutoTokenizer
 import textwrap
+import ollama
 
-# Define a function to count the number of tokens in the prompt
-def count_tokens(prompt, model_name="gpt2"):
-    # Load the tokenizer for the specified model
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    tokens = tokenizer.encode(prompt)
-    # Return the number of tokens
-    return len(tokens)
+# Ensure that entire descriptions can be printed and used
+pd.set_option('display.max_colwidth', None)
+pd.set_option('display.max_rows', None) 
 
-# Choose model
-model_name = "llama-3.3-70b-versatile"
+# Set up link to model
+ollama_client = ollama.Client(host='http://127.0.0.1:18199')
 
-client = Groq(
-    api_key=os.environ.get("GROQ_API_KEY"),  # GROQ API key is set as an environment variable
-    max_retries=5,  # Specifies the max. number of retries if the request fails
+# Convert the csv files into a pandas dataframes, remove unwanted columns, and rename columns
+df_sentences = (
+    pd.read_csv("data/sentences.txt")
+    .drop(
+        ['sentence_count', 'sentence_position', 'subject'],
+        axis=1
+    )
+    .rename(columns={'subject_standardised': 'subject'})
 )
 
-# Read the files
-with open("data/appendix_2.txt", "r") as appendix_2:
-    appendix_2 = appendix_2.read()
-
-with open("data/sentences_cat.txt", "r") as sentences_cat:
-    sentences_cat = sentences_cat.read()
-
-# Convert the csv files into a pandas dataframes
-df_sentences = pd.read_csv("data/sentences_cat.txt")
-df_app2 = pd.read_csv("data/appendix_2.txt")
+df_app2 = (
+    pd.read_csv("data/appendix_2.txt")
+    .drop(
+        ['number', 'extra', 'subject'], 
+        axis=1
+    )
+    .rename(columns={
+        'description': 'rules',
+        'subject_standardised': 'subject'
+        }
+    )
+)
 
 # Create an empty dataframe to store the output
 df_output = pd.DataFrame()
@@ -48,81 +46,76 @@ for taxon_name in df_sentences.taxon_name.unique():
     # Iterate over each subject in appendix_2 df
     for subject in df_app2.subject.unique():
         # Sentences about a specific species and subject and joined together into a paragraph
-        subject_para = " ".join(df_sentences[(df_sentences.category==subject) & (df_sentences.taxon_name==taxon_name)]['sentence'].to_list())
-        print(subject, subject_para)
-        # Batch size
-        batch_size = 10    # 10 Rows per batch
+        subject_para = " ".join(df_sentences[(df_sentences.subject==subject) & (df_sentences.taxon_name==taxon_name)]['sentence'].to_list())
+        # print(f'{subject}: {subject_para}')
 
-        # Filter df_app2 to get rows matching current subject, selecting only the 'code' and 'description' columns & rename these columns
-        df_app2_subject = df_app2[df_app2.subject==subject][["code", "description"]].rename(columns={'description':'rules'})
-        # Split the DataFrame into batches of length batch_size using list comprehension
+        # Batch size
+        batch_size = 8 
+
+        # Filter df_app2 to get rows matching current subject and code, selecting only the 'code' and 'rules' columns
+
+        df_app2_subject = df_app2[df_app2.subject==subject][["code", "rules"]]
+
+            #Split the DataFrame into batches of length batch_size using list comprehension
         batches = [df_app2_subject[i:i + batch_size] for i in range(0, len(df_app2_subject), batch_size)]
 
-        # Iterates through each batch and coverts to markdown table
-        for i, batch in enumerate(batches):
-            # print(f"Batch {i + 1}:\n{batch}\n")
-            appendix_2_subject_batch = batch.to_markdown(index=False)
-            # print(appendix_2_subject_batch)
+        # Iterates through each batch and coverts to json
+        for batch in batches:
+            appendix_2_subject_batch = batch.to_json(orient="records", indent=4)
+            #print(appendix_2_subject_batch)
 
             codes_len = len(batch)
+
             # textwrap.dedent strips out the indenting spaces in the multline text string
-            prompt_outline = textwrap.dedent("""
-                Your working materials: 
-                a description of a species ("description"), 
-                a markdown table containing codes for a trait ("code") and sets of rules ("rules") 
-                about the description values used to encode the trait. 
-                Your task:
-                Make a JSON dictionary with the key code and a numeric value built by applying the rules 
-                to the description.
-                The JSON dictionary MUST contain every key specified in codes 
-                If you cannot score the variable, set the value to none. 
-                Do not fabricate data. 
-                Ensure the values correspond to the correct code. 
-                Your answer must be as complete and accurate as possible. 
-                Ensure your output is strictly in valid JSON format (not in a fenced JSON block).
-                Do not include any extra text.
-                description: {subject_para}\n
-                code and rules table:\n
+            prompt = textwrap.dedent(f"""
+                1. list the questions that you would ask to score a plant according to "rules" in this rubric. Ensure that each question is atomic and concerns only a single character (shape, structure etc):\n
                 {appendix_2_subject_batch}
-                """)
-            prompt = prompt_outline.format(subject_para=subject_para, appendix_2_subject_batch=appendix_2_subject_batch)
-            
+                2. Now apply those questions to this description:\n
+                {subject_para}
+                3. Now combine the answers to give me a rubric score. If you cannot give a score, set the value to null. 
+                4. Export the answers as a JSON object. Use the code as the key. Ensure no white space or trailing commas. 
+                """
+            )
+
+            # print(prompt)
+
+            chat_completion = ollama_client.chat(
+                            model="llama3.3", 
+                            messages=[
+                                {
+                                    "role": "system", 
+                                    "content": "You are an expert botanist. You can extract and encode data from text to JSON.",
+                                },
+                                {
+                                    "role": "user",
+                                    "content": prompt,
+                                },
+                            ],
+                            options={"temperature": 0},
+                            format="json"
+                        )
+
+            output = chat_completion['message']['content']
+
+            print(output)
+
             try:
-
-                chat_completion = client.chat.completions.create(
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": "You are an expert botanist. You can extract and encode data from text to JSON.",
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt,
-                        },
-                    ],
-                    model=model_name,
-                )
-                output = chat_completion.choices[0].message.content
-
                 sentence_dict = json.loads(output)
-                # print(f"Asked for {codes_len} codes")
-                # print(f"Received {len(sentence_dict)} codes")
                 if codes_len != len(sentence_dict):
                     print("Incomplete extraction" + '*'*60)
-                taxon_dict.update(sentence_dict)
-                sleep(10)
-            except groq.APIConnectionError as e:
-                print("The server could not be reached")
-                print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-            except groq.RateLimitError as e:
-                print("A 429 status code was received; we should back off a bit.")
-            except groq.APIStatusError as e:
-                print("Another non-200-range status code was received")
-                print(e.status_code)
-                print(e.response)
+            except json.JSONDecodeError:
+                print("Invalid JSON output received", output)
+                # print(f"Asked for {codes_len} codes")
+                # print(f"Received {len(sentence_dict)} codes")
+            taxon_dict.update(sentence_dict)
+
+    print(json.dumps(taxon_dict, indent=4)) # Makes the output easier to read
+    print('-'*80)
 
     df_taxon = pd.DataFrame([taxon_dict])            
     df_output = pd.concat([df_output, df_taxon])
 
 print(df_output)
-df_output.to_csv('data/extracted_traits.csv', index=False)
+
+# Save the output in the data folder 
+df_output.to_csv('data/qualitative_traits.csv', index=False)
