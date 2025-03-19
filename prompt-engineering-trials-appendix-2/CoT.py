@@ -53,7 +53,6 @@ for taxon_name in df_sentences.taxon_name.unique():
         batch_size = 8 
 
         # Filter df_app2 to get rows matching current subject and code, selecting only the 'code' and 'rules' columns
-
         df_app2_subject = df_app2[df_app2.subject==subject][["code", "rules"]]
 
             #Split the DataFrame into batches of length batch_size using list comprehension
@@ -68,7 +67,7 @@ for taxon_name in df_sentences.taxon_name.unique():
 
             # textwrap.dedent strips out the indenting spaces in the multline text string
             prompt = textwrap.dedent(f"""
-                1. list the questions that you would ask to score a plant according to "rules" in this rubric. Ensure that each question is atomic and concerns only a single character (shape, structure etc):\n
+                1. list the questions that you would ask to score a plant according to the "rules" in this rubric. Ensure that each question is atomic and concerns only a single character (shape, structure etc):\n
                 {appendix_2_subject_batch}
                 2. Now apply those questions to this description:\n
                 {subject_para}
@@ -118,4 +117,4 @@ for taxon_name in df_sentences.taxon_name.unique():
 print(df_output)
 
 # Save the output in the data folder 
-df_output.to_csv('data/qualitative_traits.csv', index=False)
+df_output.to_csv('prompt-engineering-trials-appendix-2/outputs/qualitative_traits_CoT.csv', index=False)
