@@ -1,24 +1,24 @@
-import llm
 import pandas as pd
 import re
 import json
-from time import sleep
+import textwrap
+import ollama
 
-# Choose model
-model = llm.get_model("groq-llama-3.3-70b")
+# Set up link to model
+ollama_client = ollama.Client(host='http://127.0.0.1:18199')
 
 # Read the files
 df_sentences = pd.read_csv("data/sentences.txt")
 df_app1 = pd.read_csv("data/appendix_1.txt")
 
-# print("Taxon names:", df_sentences.taxon_name.unique()) 
-# print("Subjects:", df_app1.subject.to_list())
-
+# Set up a dataframe to store the output
 df_output = pd.DataFrame()
 
+# Iterate over each unique species
 for taxon_name in df_sentences.taxon_name.unique():
     print(taxon_name)
 
+    # Set up dictionary to store species names
     taxon_dict = dict()
     taxon_dict['taxon_name'] = taxon_name
 
@@ -27,12 +27,12 @@ for taxon_name in df_sentences.taxon_name.unique():
         subject_para = " ".join(df_sentences[mask]['sentence'].to_list())
         #print(subject, subject_para)
 
-        appendix_1_subject = df_app1[df_app1.subject_standardised==subject][["description", "abbreviation"]]
+        appendix_1_subject = df_app1[df_app1.subject_standardised==subject][["description", "code"]]
         for i, row in appendix_1_subject.iterrows():
 
-            prompt = f"""
+            prompt = textwrap.dedent(f"""
                 You are an expert botanist. You can extract and encode data from text. 
-                You are supplied with the description of a species ("description"), a code for a trait ("abbreviation").
+                You are supplied with the description of a species ("description"), a code for a trait ("code").
                 Make a JSON dictionary with the key code and the corresponding value from the description.
                 Do not fabricate data and ensure the values correspond to the correct code. If you cannot score the variable, set the value to null. Your answer must be as complete and accurate as possible. Ensure your output is strictly in valid JSON format, and do not include any extra text. Follow the format of the following examples.
 
@@ -53,21 +53,36 @@ for taxon_name in df_sentences.taxon_name.unique():
 
                 Generate the JSON for the following:
                 description: {subject_para}\n
-                code: {row['abbreviation']}\n
-            """
+                code: {row['code']}\n
+            """)
 
             # print(f"Prompt: {prompt}")
 
-            response = model.prompt(prompt, temperature=0)
-            output = response.text()
+            chat_completion = ollama_client.chat(
+                            model="llama3.3", 
+                            messages=[
+                                {
+                                    "role": "system", 
+                                    "content": "You are an expert botanist. You can extract and encode data from text to JSON.",
+                                },
+                                {
+                                    "role": "user",
+                                    "content": prompt,
+                                }
+                            ],
+                            options={"temperature": 0},
+                            format="json"
+                        )
+
+            print(prompt)
+
+            output = chat_completion['message']['content']
 
             try:
                 sentence_dict = json.loads(output)
                 taxon_dict.update(sentence_dict)
             except:
                 print(output)
-
-            sleep(10) # Avoid rate limits
             
     print(json.dumps(taxon_dict, indent=4)) # Makes the output easier to read
     print('-'*80)
@@ -77,4 +92,4 @@ for taxon_name in df_sentences.taxon_name.unique():
     df_output = pd.concat([df_output, df_taxon])
 
 print(df_output)
-df_output.to_csv('data/quantitative_trait_extraction.csv', index=False)
+df_output.to_csv('data/quantitative_traits.csv', index=False)

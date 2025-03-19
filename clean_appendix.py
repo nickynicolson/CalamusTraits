@@ -39,7 +39,7 @@ def main():
     for corrected_line in corrected_lines:
         # Define pattern
         if args.quantitative:
-            pattern = r"(?P<number>\d+)\.\s+(?P<description>[\w\s,\-]+)(?:\s+\((?P<unit>\w+)\))?;\s+data taken from\s+(?P<source>[\w\s,]+)\.\s+\((?P<abbreviation>\w+)\)"
+            pattern = r"(?P<number>\d+)\.\s+(?P<description>[\w\s,\-]+)(?:\s+\((?P<unit>\w+)\))?;\s+data taken from\s+(?P<source>[\w\s,]+)\.\s+\((?P<code>\w+)\)"
         else:
             pattern = r"^(?P<number>\d+)\.\s*(?P<description>.+?)\.\s*\((?P<code>[a-z]+)\)(?P<extra>\. .*)?$"
         # Apply the regex
