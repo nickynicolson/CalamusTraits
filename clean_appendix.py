@@ -82,9 +82,19 @@ def main():
     print(df_appendices.groupby('subject').size())
 
     # Now standardise the subjects
-    from term_mapper import term_mapping
-    df_appendices['subject_standardised'] = df_appendices.subject.map(term_mapping)
-    print(df_appendices.groupby('subject_standardised').size())
+    from term_mapper_gen import term_mapping_gen
+    df_appendices['subject_gen'] = df_appendices.subject.map(term_mapping_gen)
+    print(df_appendices.groupby('subject_gen').size())
+
+    from term_mapper_extract import term_mapping_extract
+    df_appendices['subject_extract'] = df_appendices.subject.map(term_mapping_extract)
+
+    # Remove extra boilerplate text from the description
+    if 'description' in df_appendices.columns:
+        df_appendices['description'] = df_appendices['description'].str.replace('A REVISION OF CALAMUS Phytotaxa 445 (1) © 2020 Magnolia Press • 481 ','', regex=False)
+
+    # Remove original subject column 
+    df_appendices = df_appendices.drop(columns=['subject'])
 
     # Output as a csv file
     df_appendices.to_csv(args.output_file, index=False)

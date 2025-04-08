@@ -5,7 +5,6 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', None)
 import re
 
-
 # Define a function that will help us clean boilerplate text from lines
 def cleanLine(s, page_number):
   cleaned = s
@@ -19,6 +18,7 @@ def cleanLine(s, page_number):
   else:
     cleaned = s
   return cleaned
+
 
 # Utility functions to extract number and name from the line indicating the
 # start of a taxonomic treatment
@@ -204,28 +204,35 @@ def main():
     if args.sentences:
       # Try to establish the subject of each sentence
       df_treatments['sentences'] = df_treatments['line_cleaned'].apply(lambda s: re.split(r'[.;]\s+',s))
-      df_treatments['sentence_count'] = df_treatments['sentences'].apply(lambda l: len(l))
-      df_treatments = df_treatments[['taxon_name','sentences','sentence_count']].explode('sentences')
-      df_treatments['sentence_position'] = df_treatments.groupby(level=0).cumcount() + 1
+      #df_treatments['sentence_count'] = df_treatments['sentences'].apply(lambda l: len(l))
+      df_treatments = df_treatments[['taxon_name','sentences']].explode('sentences')
+      #df_treatments['sentence_position'] = df_treatments.groupby(level=0).cumcount() + 1
       # Reset the index if needed
       df_treatments = df_treatments.reset_index(drop=True)
       df_treatments.rename(columns={'sentences':'sentence'}, inplace=True)
       
       df_treatments['subject'] = [None]*len(df_treatments)
        
-      multi_word_starts = ['staminate','pistillate','proximalmost','middle','partial','fruiting']
+      multi_word_starts = ['staminate','pistillate','proximalmost','middle','partial','fruiting', 'distalmost', 'distal']
       for multi_word_start in multi_word_starts:
         multi_word_start_len = len(multi_word_start.split(' '))
         multi_word_filter = (df_treatments['sentence'].str.startswith(multi_word_start) & df_treatments.subject.isnull())
-        df_treatments.loc[multi_word_filter, 'subject'] = df_treatments[multi_word_filter].sentence.apply(lambda s: ' '.join(re.split(r'\s+', s)[0:multi_word_start_len+1]))
+        df_treatments.loc[multi_word_filter, 'subject'] = df_treatments[multi_word_filter].sentence.apply(lambda s: re.sub(r'[,]$', '',' '.join(re.split(r'\s+', s)[0:multi_word_start_len+1])))
       filter = (df_treatments.subject.isnull())
       df_treatments.loc[filter, 'subject'] = df_treatments[filter].sentence.apply(lambda s: s.split(' ')[0])
       print(df_treatments.groupby('subject').size())
 
       # Now standardise the subjects
-      from term_mapper import term_mapping
-      df_treatments['subject_standardised'] = df_treatments.subject.map(term_mapping)
-      print(df_treatments.groupby('subject_standardised').size())
+      from term_mapper_gen import term_mapping_gen
+      df_treatments['subject_gen'] = df_treatments.subject.map(term_mapping_gen)
+      print(df_treatments.groupby('subject_gen').size())
+
+      from term_mapper_extract import term_mapping_extract
+      df_treatments['subject_extract'] = df_treatments.subject.map(term_mapping_extract)
+      print(df_treatments.groupby('subject_extract').size())
+
+      # Remove the original subject column
+      df_treatments.drop(columns=['subject'], inplace=True)
 
     df_treatments.to_csv(args.output_file, index=False)
 
