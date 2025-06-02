@@ -5,3 +5,6 @@ pandas
 pypdf
 transformers
 openpyxl
+ollama
+evaluate
+rouge_score

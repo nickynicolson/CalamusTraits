@@ -54,6 +54,8 @@ term_mappings = term_mapping_extract = {
     "raphe": "Raphe",
     "Seeds": "Seed",
     "seeds": "Seed",
+    "seed": "Seed",
+    "Seed": "Seed",
     "Staminate flowers": "Staminate flower",
     "staminate flowers": "Staminate flower",
     "Staminate rachillae": "Staminate rachilla",

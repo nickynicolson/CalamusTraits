@@ -54,6 +54,8 @@ term_mappings = term_mapping_gen = {
     "raphe": "Seed",
     "Seeds": "Seed",
     "seeds": "Seed",
+    "Seed": "Seed",
+    "seed": "Seed",
     "Staminate flowers": "Staminate structures",
     "staminate flowers": "Staminate structures",
     "Staminate rachillae": "Staminate structures",
