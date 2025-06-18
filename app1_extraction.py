@@ -27,7 +27,7 @@ def main():
     )
     parser.add_argument(
         '--model_name',
-        default='llama3.3',  # Set a default model name
+        default='llama3.3',
         help="Name of the model to use for the chat completion "
              "(default: 'llama3.3')"
     )
@@ -39,7 +39,11 @@ def main():
     ollama_client = ollama.Client(host='http://127.0.0.1:18199')
 
     # Read the files
-    df_sentences = pd.read_csv(args.input_file_sentences)
+    df_sentences = pd.read_csv(args.input_file_sentences)#.drop(columns=['subject'])
+    print(df_sentences.columns)
+    # If subject_extract is empty, remove those rows
+    df_sentences = df_sentences[~df_sentences.subject_extract.isna() & (df_sentences.subject_extract.str.strip() != "")]
+    print(f"Number of rows in df_sentences: {len(df_sentences)}")
     df_app1 = pd.read_csv(args.input_file_app1)
 
     # Set up a dataframe to store the output
@@ -89,9 +93,9 @@ def main():
                     response: {{"numpin": "5(5-6)"}}
 
                     ### Example 3:
-                    description: "pistillate rachillae 0.8 cm long."
+                    description: "pistillate rachillae 3.3(1.8–4.5) cm long."
                     code: "psraclen"
-                    response: {{"psraclen": "0.8 cm"}}
+                    response: {{"psraclen": "3.3(1.8–4.5) cm"}}
 
                     Generate the JSON for the following:\n
                     description: {subject_para}\n
