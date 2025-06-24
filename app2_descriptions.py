@@ -28,6 +28,8 @@ def process_supp_data(file_path):
         .replace(r'\.0', '', regex=True)
     )
 
+    print(tidy_supp_data)
+
     return supp_data, tidy_supp_data
 
 
@@ -100,7 +102,11 @@ def main():
     )
     parser.add_argument(
         'input_file_supp_data', 
-        help="Path to the input text file containing the supplementary data"
+        help="Path to the input CSV file containing the supplementary data"
+    )
+    parser.add_argument(
+        'multi_input_file',
+        help="Path to the input CSV file containing the multi-value qualitative data"
     )
     parser.add_argument(
         'output_file', 
@@ -150,66 +156,102 @@ def main():
             # if the value contains a single value, then the output is the rule that matches
             if all(item['value'] == '' for item in supp_codes):
                 output = ""
+            # if the value contains a comma, then skip
             elif any(',' in item['value'] for item in supp_codes):
-                multi_val_prompt = textwrap.dedent(f"""
-                    Using the "rules" in {app2_rules} and the corresponding "value"
-                    in {supp_codes} output the rules that match the values.
-                    Return these rules as a list, NO EXTRA TEXT.
+                # If value contains comma, run the multi-value prompt using the multi_input_file
+                # Find the corresponding row in multi_qual for this taxon_name and code
+                if 'multi_qual' not in locals():
+                    multi_qual = pd.read_csv(args.multi_input_file)
+                multi_row = multi_qual[
+                    (multi_qual['taxon_name'] == taxon_name) &
+                    (multi_qual['code'] == code)
+                ]
+                if not multi_row.empty:
+                    subject = df_app2.loc[df_app2["code"] == code, "subject"].iloc[0]
+                    multi_supp_codes = multi_row[["code", "value"]].to_json(orient='records')
+                    multi_supp_codes = json.loads(multi_supp_codes)
+                    other_values = multi_row['other_values'].to_json(orient='records')
+                    frequency = multi_row['frequency'].to_json(orient='records')
+                    num_specimens_scored = multi_row['num_specimens_scored'].to_json(orient='records')
+                    app2_rules = df_app2[df_app2.code == code][["code", "rules"]].to_json(orient='records')
+                    multi_val_prompt = textwrap.dedent(f"""
+                        ### Instructions ###
+                        Use the rules and the value provided to to produce a concise, 
+                        natural-sounding sentence that reflects the dominant trait observed.
 
-                    ### Example ###
-                    Using {{"code":"solclu","rules":"Stems solitary (0); stems
-                    clustered (1)"}} and {{"code":"solclu","value":"0,1"}}, the
-                    output would be ['Stems solitary', 'stems clustered'].
+                        Each rule is a string of semicolon-separated options in the format: 
+                        "Trait description (value)". Match the trait code in the 'value' to 
+                        its description in the rules.
+
+                        - 'frequency': Number of times the dominant trait was observed.
+                        - 'num_specimens_scored': Total specimens observed.
+                        - 'other_values': Other trait codes observed in remaining specimens.
+
+                        Use the frequency and specimen count to adjust your wording:
+                        - If the dominant trait was found in all or nearly all specimens, state it directly.
+                        - If it was found in most but not all, use qualifiers like "usually", "sometimes".
+                        - If found in a very small proportion of specimens, use "rarely".
+
+                        **Output a single sentence only. No labels, no extra text.**
+                        
+                        ### Materials ###
+                        - Rules: {app2_rules}
+                        - Value: {multi_supp_codes}
+                        - frequency: {frequency}
+                        - num_specimens_scored: {num_specimens_scored}
+                        - other_values: {other_values}
+
+                        Use the following examples to guide your response:
+
+                        ### Example 1 ###
+                        Input:
+                        - Rules: "Stems solitary (0); stems clustered (1)"
+                        - Value: {{"code": "solclu", "value": "1"}}
+                        - frequency: 3
+                        - num_specimens_scored: 4
+                        - other_values: [0]
+
+                        Output: "Stems clustered, rarely solitary."
+
+                        ### Example 2 ###
+                        Input:
+                        - Rules: "Proximalmost pinnae swept back across the sheath (on adult plants only) (0); 
+                          proximalmost pinnae not swept back across the sheath (1)"
+                        - Value: {{"code": "sweptb", "value": 1.0}}
+                        - frequency: 19
+                        - num_specimens_scored: 29
+                        - other_values: [0]
+
+                        Output: "Proximalmost pinnae sometimes swept back across the sheath."
                     """)
-                print(multi_val_prompt)
-                chat_completion = ollama_client.chat(
-                    model=args.model_name,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": "You are an expert botanist.",
-                        },
-                        {
-                            "role": "user",
-                            "content": multi_val_prompt,
-                        },
-                    ],
-                    options={"temperature": 0}
-                )
-                multi_val_output = chat_completion['message']['content']
+                    chat_completion = ollama_client.chat(
+                        model=args.model_name,
+                        messages=[
+                            {
+                                "role": "system",
+                                "content": "You are an expert botanist. You have created a trait data matrix from herbarium specimens. You are now writing species descriptions based on the data matrix.",
+                            },
+                            {
+                                "role": "user",
+                                "content": multi_val_prompt,
+                            },
+                        ],
+                        options={"temperature": 0}
+                    )
+                    output = chat_completion['message']['content']
+                    output = clean_output(output)
+                    print(f"multi: {output}")
 
-                combine_multi_prompt = textwrap.dedent(f"""
-                    ### Instructions ###
-                    Combine the following sentences / clauses as concisely as 
-                    possible: {multi_val_output}
-                    Return the combination with NO EXTRA TEXT.
-
-                    ### Example 1 ###
-                    Using ['Stems solitary', 'stems clustered'], the output would 
-                    be 'Stems clustered, sometimes solitary.'.
-
-                    ### Example 2 ###
-                    Using ['Proximalmost pinnae swept back across the sheath (on 
-                    adult plants only)', 'proximalmost pinnae not swept back across 
-                    the sheath'], the output would be 'Proximalmost pinnae 
-                    sometimes swept back across the sheath.'.
-                    """)
-                print(combine_multi_prompt)
-                chat_completion = ollama_client.chat(
-                    model=args.model_name,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": "You are an expert botanist.",
-                        },
-                        {
-                            "role": "user",
-                            "content": combine_multi_prompt,
-                        },
-                    ],
-                    options={"temperature": 0}
-                )
-                output = chat_completion['message']['content']
+                    # Store the output in a dictionary
+                    loop_dict = {
+                        "taxon_name": taxon_name,
+                        "output_sentence": output,
+                        "subject": subject
+                    }
+                    print(loop_dict)
+                    output_list.append(loop_dict)
+                else:
+                    output = ""
             else:
                 single_val_prompt = textwrap.dedent(f"""
                     ### Instructions ###
@@ -226,7 +268,7 @@ def main():
                     the output would be 'rachises without long, straight, flat
                     spines abaxially' only.
                 """)
-                print(single_val_prompt)
+                #print(single_val_prompt)
                 chat_completion = ollama_client.chat(
                     model=args.model_name,
                     messages=[
@@ -246,24 +288,31 @@ def main():
 
                 # Clean the output
                 output = clean_output(output)
+                print(f"single: {output}")
 
-            # Store the output in a dictionary
-            loop_dict = {
-                "taxon_name": taxon_name,
-                "output_sentence": output,
-                "subject": subject
-            }
-            print(loop_dict)
-            output_list.append(loop_dict)
+                # Store the output in a dictionary
+                loop_dict = {
+                    "taxon_name": taxon_name,
+                    "output_sentence": output,
+                    "subject": subject
+                }
+                print(loop_dict)
+                output_list.append(loop_dict)
 
     df_output = pd.DataFrame(output_list)
     df_frucol = process_frucol(args.input_file_supp_data)
     df_output = pd.concat([df_output, df_frucol], ignore_index=True)
 
-    df_output = df_output[df_output["output_sentence"].str.strip() != ""]
+    df_output_single = df_output[df_output["output_sentence"].str.strip() != ""]
 
-    # Save output DataFrame as a csv file
-    df_output.to_csv(args.output_file, index=False)
+    df_output = pd.DataFrame(output_list)
+    df_output_multi = df_output[df_output["output_sentence"].str.strip() != ""]
+
+    # join the single and multi output dataframes
+    df_output_combined = pd.concat([df_output_single, df_output_multi], ignore_index=True)
+    print(df_output_combined)
+    # Save the output to a CSV file
+    df_output_combined.to_csv(args.output_file, index=False)
 
 if __name__ == "__main__":
     main()
