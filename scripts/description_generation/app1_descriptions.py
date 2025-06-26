@@ -4,7 +4,12 @@ import ollama
 import pandas as pd
 import re
 import textwrap
+from scripts.utils import *
 
+# Ensure that entire descriptions can be printed and used
+pd.set_option('display.max_colwidth', None)
+
+SYSTEM_MESSAGE = "You are an expert botanist."
 
 def process_supp_data(file_path):
     # Read in the formatted supplementary data
@@ -32,6 +37,32 @@ def process_appendix1(file_path):
     return df_app1
 
 
+def get_supp_codes(tidy_supp_data, code, taxon_name):
+    """
+    Function to get the code and value from the tidy supplementary data
+    for a specific taxon name.
+    """
+    return tidy_supp_data[
+        (tidy_supp_data.code == code) &
+        (tidy_supp_data.taxon_name == taxon_name)
+    ][["code", "value"]].to_json(orient='records')
+
+
+def llm_chat(ollama_client, model_name,system_mesage, prompt):
+    """
+    Function to generate a description using the Ollama model.
+    """
+    chat_completion = ollama_client.chat(
+        model=model_name,
+        messages=[
+            {"role": "system", "content": system_mesage},
+            {"role": "user", "content": prompt}
+        ],
+        options={"temperature": 0}
+    )
+    return chat_completion['message']['content']
+
+
 def process_output(output):
     # Check if the output contains any digits
     if not re.search(r'\d', output):
@@ -44,67 +75,47 @@ def process_output(output):
     return output
 
 
-def main():
-    parser = argparse.ArgumentParser(
-    description="Generates descriptions based on the appendix 1 data"
-    )
-    parser.add_argument(
-        'input_file_app1', 
-        help="Path to the input text file containing the appendix1"
-    )
-    parser.add_argument(
-        'input_file_supp_data', 
-        help="Path to the input CSV file containing the supplementary data"
-    )
-    parser.add_argument(
-        'output_file', 
-        help="Path to the output CSV file where the descriptions are saved"
-    )
-    parser.add_argument(
-        '--model_name',
-        default='llama3.3',
-        help="Name of the model to use for the chat completion (default: 'llama3.3')"
-    )
+def append_output(output_list, taxon_name, output, subject):
+    """
+    Appends a dictionary with taxon_name, output_sentence, and subject to the output_list.
+    """
+    loop_dict = {
+        "taxon_name": taxon_name,
+        "output_sentence": output,
+        "subject": subject
+    }
+    output_list.append(loop_dict)
 
+
+def main():
+    parser = argparse.ArgumentParser(description="Generates descriptions based on the appendix 1 data")
+    parser.add_argument('input_file_app1', help="Path to the input text file containing the appendix1")
+    parser.add_argument('input_file_supp_data', help="Path to the input CSV file containing the supplementary data")
+    parser.add_argument('output_file', help="Path to the output CSV file where the descriptions are saved")
+    parser.add_argument('--model_name', default='llama3.3', help="Name of the model to use for the chat completion (default: 'llama3.3')")
     # Parse arguments
     args = parser.parse_args()
-
-    # Ensure that entire descriptions can be printed and used
-    pd.set_option('display.max_colwidth', None)
-
-    # Set up ollama connection
+    # Set up connection to ollama model on HPC
     ollama_client = ollama.Client(host='http://127.0.0.1:18199')
-
-    # Read in the appendix 1 data
+    # Read in the input files
     df_app1 = process_appendix1(args.input_file_app1)
-
-    # Read in the supplementary data and tidy it 
     supp_data, tidy_supp_data = process_supp_data(args.input_file_supp_data)
-
     # Create an empty list to store the output
     output_list = []
-
-    # Iterate over each taxon_name and create a dictionary to store them
+    # Iterate over each taxon_name
     for taxon_name in supp_data.taxon_name.unique():
-
         # Iterate over each code in the app1 DataFrame
         for code in df_app1.code.unique():
             # Look up subject that relates to code
             subject = df_app1.loc[df_app1["code"] == code, "subject"].iloc[0]
-
             # Filter the supplementary data for the specific code and taxon_name 
             # And convert to json
-            supp_codes = tidy_supp_data[
-                (tidy_supp_data.code == code) & 
-                (tidy_supp_data.taxon_name == taxon_name)
-            ][["code", "value"]].to_json(orient='records')
-
+            supp_codes = get_supp_codes(tidy_supp_data, code, taxon_name)
             # Filter the app1 DataFrame for the specific code
             # And convert to json
             app1_descriptions = df_app1[
                 df_app1.code == code
             ][["code", "description", "unit"]].to_json(orient='records')
-
             # Set up the prompt
             prompt = textwrap.dedent(f"""
                 ### Instructions ###
@@ -119,46 +130,17 @@ def main():
                 and {{"code":"rachislen","value":"41.0(25.5-70.0)"}}, the output 
                 would be 'Rachis length is 41.0(25.5-70.0)cm'.
             """)
-
             # Send the prompt to the LLM
-            chat_completion = ollama_client.chat(
-                model=args.model_name,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are an expert botanist.",
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt,
-                    },
-                ],
-                options={"temperature": 0}
-            )
-            print(prompt)
-            # Get the output from the chat completion
-            output = chat_completion['message']['content']
-
-            # Process the output
+            output = llm_chat(ollama_client, args.model_name, SYSTEM_MESSAGE, prompt)
+            # Clean the output
             output = process_output(output)
-
-            # Store the output in a dictionary
-            loop_dict = {
-                "taxon_name": taxon_name,
-                "output_sentence": output,
-                "subject": subject
-            }
-            print(loop_dict)
-            # Append the dictionary to the output list
-            output_list.append(loop_dict)
-
+            # Store the output in a dictionary and append to output list
+            append_output(output_list, taxon_name, output, subject)
     # Create a DataFrame from the output list
     df_output = pd.DataFrame(output_list)
-
     # Remove any rows where the output_sentence is an empty string
     df_output = df_output[df_output["output_sentence"].str.strip() != ""]
-
-    # Save output DataFrame as a csv file
+    # Save the output to a CSV file
     df_output.to_csv(args.output_file, index=False)
 
 if __name__ == "__main__":

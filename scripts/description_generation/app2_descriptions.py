@@ -5,6 +5,12 @@ import ollama
 import pandas as pd
 import re
 import textwrap
+from scripts.utils import *
+
+# Ensure that entire descriptions can be printed and used
+pd.set_option('display.max_colwidth', None)
+
+SYSTEM_MESSAGE = "You are an expert botanist. You have created a trait data matrix from herbarium specimens. You are writing species descriptions based on the data matrix."
 
 
 def process_supp_data(file_path):
@@ -17,9 +23,7 @@ def process_supp_data(file_path):
         .replace(to_replace=np.nan, value='')
         .drop('frucol', axis=1)
     )
-
     supp_data = supp_data.loc[:, ['taxon_name'] + list(supp_data.loc[:, 'solclu':'embryo'].columns)]
-
     # Tidy the supplementary data
     tidy_supp_data = (
         supp_data
@@ -27,9 +31,6 @@ def process_supp_data(file_path):
         .astype(str)
         .replace(r'\.0', '', regex=True)
     )
-
-    print(tidy_supp_data)
-
     return supp_data, tidy_supp_data
 
 
@@ -62,6 +63,30 @@ def process_frucol(file_path):
     df_frucol['subject'] = 'Fruit'
     return df_frucol
 
+# def get_supp_codes(tidy_supp_data, code, taxon_name):
+#     """
+#     Function to get the code and value from the tidy supplementary data
+#     for a specific taxon name.
+#     """
+#     return tidy_supp_data[
+#         (tidy_supp_data.code == code) &
+#         (tidy_supp_data.taxon_name == taxon_name)
+#     ][["code", "value"]].to_json(orient='records')
+
+
+# def llm_chat(ollama_client, model_name,system_mesage, prompt):
+#     """
+#     Function to generate a description using the Ollama model.
+#     """
+#     chat_completion = ollama_client.chat(
+#         model=model_name,
+#         messages=[
+#             {"role": "system", "content": system_mesage},
+#             {"role": "user", "content": prompt}
+#         ],
+#         options={"temperature": 0}
+#     )
+#     return chat_completion['message']['content']
 
 def clean_output(output):
     """
@@ -72,96 +97,70 @@ def clean_output(output):
     # returned an invalid response
     if re.search(r'not as above|empty string', output):
         output = ''
-
     # Ensures output is the rule only
     if re.search(r'\'.*?\'', output):
         output = re.search(r'\'(.*?)\'', output).group(1)
-
     if re.search(r'\d"\}\s*(.*)', output):
         output = re.search(r'\d"\}\s*(.*)', output).group(1)
-
     # Removes (0), (1), (2) etc. from the output to ensure the final sentence
     # is clean and readable
     if re.search(r'\(\d\)', output):
         output = re.sub(r'\(\d\)', "", output)
-
     # Check if the JSON object has a "value" field that is an empty string
     if re.search(r'"value": ""}', output):
         output = ""
-
     return output
 
 
-def main():
-    parser = argparse.ArgumentParser(
-    description="Generates descriptions based on the appendix 2 data"
-    )
-    parser.add_argument(
-        'input_file_app2', 
-        help="Path to the input text file containing the appendix 2"
-    )
-    parser.add_argument(
-        'input_file_supp_data', 
-        help="Path to the input CSV file containing the supplementary data"
-    )
-    parser.add_argument(
-        'multi_input_file',
-        help="Path to the input CSV file containing the multi-value qualitative data"
-    )
-    parser.add_argument(
-        'output_file', 
-        help="Path to the output CSV file where the descriptions are saved"
-    )
-    parser.add_argument(
-        '--model_name',
-        default='llama3.3',
-        help="Name of the model to use for the chat completion (default: 'llama3.3')"
-    )
+# def append_output(output_list, taxon_name, output, subject):
+#     """
+#     Appends a dictionary with taxon_name, output_sentence, and subject to the output_list.
+#     """
+#     loop_dict = {
+#         "taxon_name": taxon_name,
+#         "output_sentence": output,
+#         "subject": subject
+#     }
+#     output_list.append(loop_dict)
 
+
+def main():
+    parser = argparse.ArgumentParser(description="Generates descriptions based on the appendix 2 data")
+    parser.add_argument('input_file_app2', help="Path to the input text file containing the appendix 2")
+    parser.add_argument('input_file_supp_data', help="Path to the input CSV file containing the supplementary data")
+    parser.add_argument('multi_input_file', help="Path to the input CSV file containing the multi-value qualitative data")
+    parser.add_argument('output_file', help="Path to the output CSV file where the descriptions are saved")
+    parser.add_argument('--model_name', default='llama3.3', help="Name of the model to use for the chat completion (default: 'llama3.3')")
     # Parse arguments
     args = parser.parse_args()
-
-    # Ensure that entire descriptions can be printed and used
-    pd.set_option('display.max_colwidth', None)
-
-    # Set up connection to ollama
+    # Set up connection to ollama model on HPC
     ollama_client = ollama.Client(host='http://127.0.0.1:18199')
-
-    # Read in the appendix
+    # Read in the input files
     df_app2 = process_appendix2(args.input_file_app2)
-
-    # Use the function to read and tidy the supplementary data
     supp_data, tidy_supp_data = process_supp_data(args.input_file_supp_data)
-
+    # Create an empty list to store the output
     output_list = []
-
-    # Iterate over each taxon_name and create a dictionary to store them
+    # Read in multi-value qualitative data
+    multi_qual = pd.read_csv(args.multi_input_file)
+    # Iterate over each taxon_name
     for taxon_name in supp_data.taxon_name.unique():
-
+        # Iterate over each code in the app2 DataFrame
         for code in df_app2.code.unique():
-
+            # Look up subject that relates to code
             subject = df_app2.loc[df_app2["code"] == code, "subject"].iloc[0]
-
-            supp_codes = tidy_supp_data[
-                (tidy_supp_data.code == code) &
-                (tidy_supp_data.taxon_name == taxon_name)
-            ][["code", "value"]].to_json(orient='records')
+            supp_codes = get_supp_codes(tidy_supp_data, code, taxon_name)
             supp_codes = json.loads(supp_codes)
-
             app2_rules = df_app2[df_app2.code == code][["code", "rules"]].to_json(
                 orient='records')
-
             # if the value == '' then the output is an empty string. If the value contains
             # multiple values, then the output is a list of rules that match the values.
             # if the value contains a single value, then the output is the rule that matches
             if all(item['value'] == '' for item in supp_codes):
                 output = ""
-            # if the value contains a comma, then skip
+            # if the value contains a comma, process as a multi-value case
             elif any(',' in item['value'] for item in supp_codes):
                 # If value contains comma, run the multi-value prompt using the multi_input_file
                 # Find the corresponding row in multi_qual for this taxon_name and code
-                if 'multi_qual' not in locals():
-                    multi_qual = pd.read_csv(args.multi_input_file)
                 multi_row = multi_qual[
                     (multi_qual['taxon_name'] == taxon_name) &
                     (multi_qual['code'] == code)
@@ -179,7 +178,7 @@ def main():
                         Use the rules and the value provided to to produce a concise, 
                         natural-sounding sentence that reflects the dominant trait observed.
 
-                        Each rule is a string of semicolon-separated options in the format: 
+                        Each set of rules is a string of semicolon-separated options in the format: 
                         "Trait description (value)". Match the trait code in the 'value' to 
                         its description in the rules.
 
@@ -224,32 +223,12 @@ def main():
 
                         Output: "Proximalmost pinnae sometimes swept back across the sheath."
                     """)
-                    chat_completion = ollama_client.chat(
-                        model=args.model_name,
-                        messages=[
-                            {
-                                "role": "system",
-                                "content": "You are an expert botanist. You have created a trait data matrix from herbarium specimens. You are now writing species descriptions based on the data matrix.",
-                            },
-                            {
-                                "role": "user",
-                                "content": multi_val_prompt,
-                            },
-                        ],
-                        options={"temperature": 0}
-                    )
-                    output = chat_completion['message']['content']
+                    output = llm_chat(ollama_client, args.model_name, SYSTEM_MESSAGE, multi_val_prompt)
+                    # Clean the output
                     output = clean_output(output)
-                    print(f"multi: {output}")
-
-                    # Store the output in a dictionary
-                    loop_dict = {
-                        "taxon_name": taxon_name,
-                        "output_sentence": output,
-                        "subject": subject
-                    }
-                    print(loop_dict)
-                    output_list.append(loop_dict)
+                    # Store the output in a dictionary only if output is not empty
+                    if output.strip() != "":
+                        append_output(output_list, taxon_name, output, subject)
                 else:
                     output = ""
             else:
@@ -268,51 +247,19 @@ def main():
                     the output would be 'rachises without long, straight, flat
                     spines abaxially' only.
                 """)
-                #print(single_val_prompt)
-                chat_completion = ollama_client.chat(
-                    model=args.model_name,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": "You are an expert botanist.",
-                        },
-                        {
-                            "role": "user",
-                            "content": single_val_prompt,
-                        },
-                    ],
-                    options={"temperature": 0}
-                )
-
-                output = chat_completion['message']['content']
-
+                output = llm_chat(ollama_client, args.model_name, SYSTEM_MESSAGE, single_val_prompt)
                 # Clean the output
                 output = clean_output(output)
-                print(f"single: {output}")
-
-                # Store the output in a dictionary
-                loop_dict = {
-                    "taxon_name": taxon_name,
-                    "output_sentence": output,
-                    "subject": subject
-                }
-                print(loop_dict)
-                output_list.append(loop_dict)
-
+                # Store the output in a dictionary and append to output list
+                append_output(output_list, taxon_name, output, subject)
+    # Create a DataFrame from the output list
     df_output = pd.DataFrame(output_list)
     df_frucol = process_frucol(args.input_file_supp_data)
     df_output = pd.concat([df_output, df_frucol], ignore_index=True)
-
-    df_output_single = df_output[df_output["output_sentence"].str.strip() != ""]
-
-    df_output = pd.DataFrame(output_list)
-    df_output_multi = df_output[df_output["output_sentence"].str.strip() != ""]
-
-    # join the single and multi output dataframes
-    df_output_combined = pd.concat([df_output_single, df_output_multi], ignore_index=True)
-    print(df_output_combined)
+    # Remove any rows where the output_sentence is an empty string
+    df_output = df_output[df_output["output_sentence"].str.strip() != ""]
     # Save the output to a CSV file
-    df_output_combined.to_csv(args.output_file, index=False)
+    df_output.to_csv(args.output_file, index=False)
 
 if __name__ == "__main__":
     main()
