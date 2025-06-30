@@ -4,12 +4,36 @@ import ollama
 import pandas as pd
 import re
 import textwrap
-from scripts.utils import *
+from scripts.utils import get_supp_codes, llm_chat, append_output
 
 # Ensure that entire descriptions can be printed and used
 pd.set_option('display.max_colwidth', None)
 
 SYSTEM_MESSAGE = "You are an expert botanist."
+
+
+def parse_args():
+    """
+    Function to parse command line arguments.
+    """
+    parser = argparse.ArgumentParser(description="Generates descriptions based on the appendix 1 data")
+    parser.add_argument('input_file_app1', help="Path to the input text file containing the appendix1")
+    parser.add_argument('input_file_supp_data', help="Path to the input CSV file containing the supplementary data")
+    parser.add_argument('output_file', help="Path to the output CSV file where the descriptions are saved")
+    parser.add_argument('--model_name', default='llama3.3', help="Name of the model to use for the chat completion (default: 'llama3.3')")
+    return parser.parse_args()
+
+
+def process_appendix1(file_path):
+    # Read in the appendix
+    df_app1 = (
+        pd.read_csv(file_path)
+        .drop(['number', 'source', 'subject_extract'], axis=1)
+        .rename(columns={"subject_gen": "subject"})
+        .replace(to_replace=np.nan, value='')
+    )
+    return df_app1
+
 
 def process_supp_data(file_path):
     # Read in the formatted supplementary data
@@ -26,43 +50,6 @@ def process_supp_data(file_path):
     return supp_data, tidy_supp_data
 
 
-def process_appendix1(file_path):
-    # Read in the appendix
-    df_app1 = (
-        pd.read_csv(file_path)
-        .drop(['number', 'source', 'subject_extract'], axis=1)
-        .rename(columns={"subject_gen": "subject"})
-        .replace(to_replace=np.nan, value='')
-    )
-    return df_app1
-
-
-def get_supp_codes(tidy_supp_data, code, taxon_name):
-    """
-    Function to get the code and value from the tidy supplementary data
-    for a specific taxon name.
-    """
-    return tidy_supp_data[
-        (tidy_supp_data.code == code) &
-        (tidy_supp_data.taxon_name == taxon_name)
-    ][["code", "value"]].to_json(orient='records')
-
-
-def llm_chat(ollama_client, model_name,system_mesage, prompt):
-    """
-    Function to generate a description using the Ollama model.
-    """
-    chat_completion = ollama_client.chat(
-        model=model_name,
-        messages=[
-            {"role": "system", "content": system_mesage},
-            {"role": "user", "content": prompt}
-        ],
-        options={"temperature": 0}
-    )
-    return chat_completion['message']['content']
-
-
 def process_output(output):
     # Check if the output contains any digits
     if not re.search(r'\d', output):
@@ -75,26 +62,9 @@ def process_output(output):
     return output
 
 
-def append_output(output_list, taxon_name, output, subject):
-    """
-    Appends a dictionary with taxon_name, output_sentence, and subject to the output_list.
-    """
-    loop_dict = {
-        "taxon_name": taxon_name,
-        "output_sentence": output,
-        "subject": subject
-    }
-    output_list.append(loop_dict)
-
-
 def main():
-    parser = argparse.ArgumentParser(description="Generates descriptions based on the appendix 1 data")
-    parser.add_argument('input_file_app1', help="Path to the input text file containing the appendix1")
-    parser.add_argument('input_file_supp_data', help="Path to the input CSV file containing the supplementary data")
-    parser.add_argument('output_file', help="Path to the output CSV file where the descriptions are saved")
-    parser.add_argument('--model_name', default='llama3.3', help="Name of the model to use for the chat completion (default: 'llama3.3')")
     # Parse arguments
-    args = parser.parse_args()
+    args = parse_args()
     # Set up connection to ollama model on HPC
     ollama_client = ollama.Client(host='http://127.0.0.1:18199')
     # Read in the input files

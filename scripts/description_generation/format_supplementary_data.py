@@ -3,6 +3,15 @@ import numpy as np
 import pandas as pd
 
 
+def parse_args():
+    """Function to parse command line arguments."""
+    parser = argparse.ArgumentParser(description="Formats the supplementary data matrix")
+    parser.add_argument('input_file', help="Path to the input Excel file containing the supplementary data matrix")
+    parser.add_argument('output_file_qual_multi', help="Path to the output CSV file for qualitative traits with multiple numbers per code")
+    parser.add_argument('output_file', help="Path to the output CSV file where the formatted data will be saved")
+    return parser.parse_args()
+
+
 def read_supp_data(input_file):
     """Read in the supplementary data matrix and adjust as needed."""
     supp_data = (
@@ -119,13 +128,8 @@ def format_frucol(supp_data):
 
 
 def main():
-    # Set up argument parser
-    parser = argparse.ArgumentParser(description="Formats the supplementary data matrix")
-    parser.add_argument('input_file', help="Path to the input Excel file containing the supplementary data matrix")
-    parser.add_argument('output_file_qual_multi', help="Path to the output CSV file for qualitative traits with multiple numbers per code")
-    parser.add_argument('output_file', help="Path to the output CSV file where the formatted data will be saved")
     # Parse arguments
-    args = parser.parse_args()
+    args = parse_args()
     # Call the function to read the supplementary data
     supp_data = read_supp_data(args.input_file)
     # Convert all column headings to lowercase for consistency

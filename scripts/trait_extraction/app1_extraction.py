@@ -12,45 +12,36 @@ SYSTEM_MESSAGE = """
 You are an expert botanist. You can extract and encode data from text to JSON.
 """
 
-def llm_chat(ollama_client, model_name,system_mesage, prompt):
+
+def parse_args():
     """
-    Function to generate a description using the Ollama model.
+    Function to parse command line arguments.
     """
-    chat_completion = ollama_client.chat(
-        model=model_name,
-        messages=[
-            {"role": "system", "content": system_mesage},
-            {"role": "user", "content": prompt}
-        ],
-        options={"temperature": 0}
-    )
-    return chat_completion['message']['content']
-
-
-def check_valid_json(output, taxon_dict):
-    try:
-        sentence_dict = json.loads(output)
-        taxon_dict.update(sentence_dict)
-    except Exception as e:
-        logging.error(f"Failed to parse JSON {output} | Error: {e}")
-    return taxon_dict
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Extracts quantitative traits")
+    parser = argparse.ArgumentParser(description="Extracts quantitative traits from text files.")
     parser.add_argument('input_file_sentences', help="Path to the input text file containing the sentences")
     parser.add_argument('input_file_app1', help="Path to the input text file containing the appendix1")
     parser.add_argument('output_file', help="Path to the output CSV file where the data is saved")
     parser.add_argument('--model_name', default='llama3.3', help="Name of the model to use for the chat completion (default: 'llama3.3')")
-    # Parse arguments
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def read_inputs(input_file_sentences, input_file_app1):
+    """
+    Function to read the input files and return the dataframes.
+    """
+    df_sentences = pd.read_csv(input_file_sentences)#.drop(columns=['subject'])
+    df_app1 = pd.read_csv(input_file_app1)
+    # Remove rows with empty subject_extract
+    df_sentences = df_sentences[~df_sentences.subject_extract.isna() & (df_sentences.subject_extract.str.strip() != "")]
+    return df_sentences, df_app1
+
+
+def main():
+    args = parse_args()
     # Set up connection to ollama model on HPC
     ollama_client = ollama.Client(host='http://127.0.0.1:18199')
     # Read the input files
-    df_sentences = pd.read_csv(args.input_file_sentences)#.drop(columns=['subject'])
-    df_app1 = pd.read_csv(args.input_file_app1)
-    # If subject_extract is empty, remove those rows
-    df_sentences = df_sentences[~df_sentences.subject_extract.isna() & (df_sentences.subject_extract.str.strip() != "")]
+    df_sentences, df_app1 = read_inputs(args.input_file_sentences, args.input_file_app1)
     # Create an empty dataframe to store the output
     df_output = pd.DataFrame()
     # Iterate over each unique species

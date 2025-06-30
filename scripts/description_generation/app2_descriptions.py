@@ -5,33 +5,12 @@ import ollama
 import pandas as pd
 import re
 import textwrap
-from scripts.utils import *
+from scripts.utils import get_supp_codes, llm_chat, append_output
 
 # Ensure that entire descriptions can be printed and used
 pd.set_option('display.max_colwidth', None)
 
 SYSTEM_MESSAGE = "You are an expert botanist. You have created a trait data matrix from herbarium specimens. You are writing species descriptions based on the data matrix."
-
-
-def process_supp_data(file_path):
-    """
-    Function to read and tidy the supplementary data.
-    """
-    # Read in the formatted supplementary data
-    supp_data = (
-        pd.read_csv(file_path)
-        .replace(to_replace=np.nan, value='')
-        .drop('frucol', axis=1)
-    )
-    supp_data = supp_data.loc[:, ['taxon_name'] + list(supp_data.loc[:, 'solclu':'embryo'].columns)]
-    # Tidy the supplementary data
-    tidy_supp_data = (
-        supp_data
-        .melt(id_vars=["taxon_name"], var_name="code", value_name="value")
-        .astype(str)
-        .replace(r'\.0', '', regex=True)
-    )
-    return supp_data, tidy_supp_data
 
 
 def process_appendix2(file_path):
@@ -54,6 +33,29 @@ def process_appendix2(file_path):
     return df_app2
 
 
+def process_supp_data(file_path, file_path_multi):
+    """
+    Function to read and tidy the supplementary data.
+    """
+    # Read in the formatted supplementary data
+    supp_data = (
+        pd.read_csv(file_path)
+        .replace(to_replace=np.nan, value='')
+        .drop('frucol', axis=1)
+    )
+    supp_data = supp_data.loc[:, ['taxon_name'] + list(supp_data.loc[:, 'solclu':'embryo'].columns)]
+    # Tidy the supplementary data
+    tidy_supp_data = (
+        supp_data
+        .melt(id_vars=["taxon_name"], var_name="code", value_name="value")
+        .astype(str)
+        .replace(r'\.0', '', regex=True)
+    )
+    # Read in the multi-value qualitative data
+    multi_qual = pd.read_csv(file_path_multi)
+    return supp_data, tidy_supp_data, multi_qual
+
+
 def process_frucol(file_path):
     """
     Function to read and process the frucol data.
@@ -63,30 +65,6 @@ def process_frucol(file_path):
     df_frucol['subject'] = 'Fruit'
     return df_frucol
 
-# def get_supp_codes(tidy_supp_data, code, taxon_name):
-#     """
-#     Function to get the code and value from the tidy supplementary data
-#     for a specific taxon name.
-#     """
-#     return tidy_supp_data[
-#         (tidy_supp_data.code == code) &
-#         (tidy_supp_data.taxon_name == taxon_name)
-#     ][["code", "value"]].to_json(orient='records')
-
-
-# def llm_chat(ollama_client, model_name,system_mesage, prompt):
-#     """
-#     Function to generate a description using the Ollama model.
-#     """
-#     chat_completion = ollama_client.chat(
-#         model=model_name,
-#         messages=[
-#             {"role": "system", "content": system_mesage},
-#             {"role": "user", "content": prompt}
-#         ],
-#         options={"temperature": 0}
-#     )
-#     return chat_completion['message']['content']
 
 def clean_output(output):
     """
@@ -112,36 +90,28 @@ def clean_output(output):
     return output
 
 
-# def append_output(output_list, taxon_name, output, subject):
-#     """
-#     Appends a dictionary with taxon_name, output_sentence, and subject to the output_list.
-#     """
-#     loop_dict = {
-#         "taxon_name": taxon_name,
-#         "output_sentence": output,
-#         "subject": subject
-#     }
-#     output_list.append(loop_dict)
-
-
-def main():
+def parse_args():
+    """
+    Function to parse command line arguments.
+    """
     parser = argparse.ArgumentParser(description="Generates descriptions based on the appendix 2 data")
     parser.add_argument('input_file_app2', help="Path to the input text file containing the appendix 2")
     parser.add_argument('input_file_supp_data', help="Path to the input CSV file containing the supplementary data")
     parser.add_argument('multi_input_file', help="Path to the input CSV file containing the multi-value qualitative data")
     parser.add_argument('output_file', help="Path to the output CSV file where the descriptions are saved")
     parser.add_argument('--model_name', default='llama3.3', help="Name of the model to use for the chat completion (default: 'llama3.3')")
+    return parser.parse_args()
+
+def main():
     # Parse arguments
-    args = parser.parse_args()
+    args = parse_args()
     # Set up connection to ollama model on HPC
     ollama_client = ollama.Client(host='http://127.0.0.1:18199')
     # Read in the input files
     df_app2 = process_appendix2(args.input_file_app2)
-    supp_data, tidy_supp_data = process_supp_data(args.input_file_supp_data)
+    supp_data, tidy_supp_data, multi_qual = process_supp_data(args.input_file_supp_data, args.multi_input_file)
     # Create an empty list to store the output
     output_list = []
-    # Read in multi-value qualitative data
-    multi_qual = pd.read_csv(args.multi_input_file)
     # Iterate over each taxon_name
     for taxon_name in supp_data.taxon_name.unique():
         # Iterate over each code in the app2 DataFrame
