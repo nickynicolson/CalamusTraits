@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project explores transitioning between trait matrices and textual descriptions of species, using a subset of the palm genus *Calamus*.
+This project explores how we can use LLMs to transition between trait matrices and textual descriptions of species, using a subset of the palm genus *Calamus*.
 
 Calamus was recently monographed in Henderson, A., 2020. A revision of Calamus (Arecaceae, Calamoideae, Calameae, Calaminae). Phytotaxa 445, 1–656. [doi: 10.11646/phytotaxa.445.1.1](https://doi.org/10.11646/phytotaxa.445.1.1)
 
@@ -116,11 +116,26 @@ flowchart LR
     class A,B,C,D rounded;
 ```
 
-## How to run the scripts
+## Set Up
 
-This assumes that you have cloned the repository to a machine where you have: (a) a local installation of Python, (b) the build tool `make` and (c) a command line terminal program to run the following commands:
+The scripts require connection to a LLM on a HPC cluster. Follow the instructions for installation at: [LLM install on HPC](https://github.com/WFO-ID-pilots/.github/blob/main/docs/LLM-install-on-HPC.md)
+
+The following instructions assume that you have cloned the repository to a machine where you have: (a) a local installation of Python, (b) the build tool `make` and (c) a command line terminal program to run the following commands:
 
 1. Set up a virtual environment: `python -m venv env` and activate it: `source env/Scripts/activate`
 2. Install the libraries: `pip install -r requirements.txt`
-3. Copy the source PDF to the `resources`1 directory, name it `calamus_monograph.pdf`
-4. Run the script to extract trait defintions and species descriptions: `make all`
+3. Copy the source PDF to the `resources` directory, name it `calamus_monograph.pdf`
+4. Run the script to extract trait defintions and species descriptions: `make monograph_data`
+5. Alternatively, you may run `make all` and ignore [how to run the scripts](https://github.com/KewBridge/CalamusTraits/tree/main?tab=readme-ov-file#how-to-run-the-scripts)
+
+## How to Run the Scripts
+
+**The following instructions outline how to run description generation scripts for the *Ceratolobus* group**
+
+1. You must have completed the 'Set Up' steps as found above
+2. Run `make ceratolobus` to generate descriptions. It takes ~20 mins to generate 6 full species descriptions.
+
+**The following instructions outline how to run quantitative trait extraction scripts for the *Ceratolobus* group**
+
+1. You must have completed the 'Set Up' steps as found above
+2. Run `make ceratbolobus_outputs/quantitative_traits.csv` to extract quantitative traits from species descriptions.
