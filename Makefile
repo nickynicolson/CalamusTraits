@@ -33,9 +33,9 @@ ceratolobus_outputs/app1_descriptions.csv: data/appendix_1.txt ceratolobus_outpu
 	mkdir -p ceratolobus_outputs
 	python -m scripts.description_generation.app1_descriptions $^ ceratolobus_outputs/app1_descriptions.csv
 
-ceratolobus_outputs/app2_descriptions.csv: data/appendix_2.txt
+ceratolobus_outputs/app2_descriptions.csv: data/appendix_2.txt ceratolobus_outputs/formatted_supp_data.csv ceratolobus_outputs/supp_data_multi.csv
 	mkdir -p ceratolobus_outputs
-	python -m scripts.description_generation.app2_descriptions $< trials/ceratbolobus_trial/supp_data.csv trials/ceratbolobus_trial/supp_data_multi.csv ceratolobus_outputs/app2_descriptions.csv
+	python -m scripts.description_generation.app2_descriptions $^ ceratolobus_outputs/app2_descriptions.csv
 
 # Generates full species descriptions
 ceratolobus_outputs/final_combined_descriptions.csv: ceratolobus_outputs/app1_descriptions.csv ceratolobus_outputs/app2_descriptions.csv
@@ -50,11 +50,11 @@ ceratolobus_outputs/subject_descriptions.csv: ceratolobus_outputs/app1_descripti
 ceratolobus_descriptions: ceratolobus_outputs/final_combined_descriptions.csv
 
 # To extract quantitative data from the monograph
-ceratbolobus_outputs/quantitative_traits.csv: data/sentences.txt data/appendix_1.txt
+ceratolobus_outputs/quantitative_traits.csv: data/sentences.txt data/appendix_1.txt
 	mkdir -p ceratolobus_outputs
 	python -m scripts.trait_extraction.app1_extraction $^ ceratolobus_outputs/quantitative_traits.csv
 
-all: data/appendix_1.txt data/appendix_2.txt data/treatments.txt data/sentences.txt ceratolobus_descriptions ceratbolobus_outputs/quantitative_traits.csv
+all: data/appendix_1.txt data/appendix_2.txt data/treatments.txt data/sentences.txt ceratolobus_outputs/formatted_supp_data.csv ceratolobus_outputs/supp_data_multi.csv ceratolobus_outputs/app1_descriptions.csv ceratolobus_outputs/app2_descriptions.csv ceratolobus_descriptions ceratolobus_outputs/quantitative_traits.csv
 
 clean:
 	rm -rf data ceratolobus_outputs

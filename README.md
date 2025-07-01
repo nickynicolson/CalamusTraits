@@ -118,7 +118,7 @@ flowchart LR
 
 ## Set Up
 
-The scripts require connection to a LLM on a HPC cluster. Follow the instructions for installation at: [LLM install on HPC](https://github.com/WFO-ID-pilots/.github/blob/main/docs/LLM-install-on-HPC.md)
+The scripts require connection to a LLM on a HPC cluster. Follow these instructions for installation [LLM install on HPC](https://github.com/WFO-ID-pilots/.github/blob/main/docs/LLM-install-on-HPC.md)
 
 The following instructions assume that you have cloned the repository to a machine where you have: (a) a local installation of Python, (b) the build tool `make` and (c) a command line terminal program to run the following commands:
 
