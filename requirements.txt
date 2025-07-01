@@ -1,10 +1,6 @@
-llm
-llm-groq
-groq
 pandas
+numpy
 pypdf
-transformers
 openpyxl
 ollama
-evaluate
-rouge_score
+textwrap

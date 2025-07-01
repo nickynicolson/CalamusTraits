@@ -102,6 +102,7 @@ def parse_args():
     parser.add_argument('--model_name', default='llama3.3', help="Name of the model to use for the chat completion (default: 'llama3.3')")
     return parser.parse_args()
 
+
 def main():
     # Parse arguments
     args = parse_args()

@@ -80,7 +80,7 @@ def format_output(output_list, args, SUBJECT_ORDER):
     # Create a DataFrame from the output list
     df_output = pd.DataFrame(output_list)
     # Remove any rows where the species_description is an empty string
-    df_output = df_output[df_output["species_description"].str.strip() != ""]
+    df_output = df_output[df_output["output_sentence"].str.strip() != ""]
     # define a custom order for the subjects
     subject_order = SUBJECT_ORDER
     # Ensure all subjects in the custom order are present in the DataFrame
@@ -93,15 +93,15 @@ def format_output(output_list, args, SUBJECT_ORDER):
         ordered=True,
     )
     # Sort the DataFrame by 'taxon_name' and 'subject',
-    # and group by 'taxon_name'
+    df_output = df_output.sort_values(by=['taxon_name', 'subject'])
     if getattr(args, 'subject_sentences', False):
-        df_output = df_output.sort_values(by=['taxon_name', 'subject'])
+        return df_output
     else:
         df_output = (
             df_output
             .drop(columns=['subject'])
-            .groupby('taxon_name')
-            .agg({'species_description': ' '.join})
+            .groupby('taxon_name', sort=False)
+            .agg({'output_sentence': ' '.join})
             .reset_index()
         )
     return df_output
