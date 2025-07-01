@@ -133,7 +133,7 @@ The following instructions assume that you have cloned the repository to a machi
 **The following instructions outline how to run description generation scripts for the *Ceratolobus* group**
 
 1. You must have completed the 'Set Up' steps as found above
-2. Run `make ceratolobus` to generate descriptions. It takes ~20 mins to generate 6 full species descriptions.
+2. Run `make ceratolobus_descriptions` to generate descriptions. It takes ~20 mins to generate 6 full species descriptions.
 
 **The following instructions outline how to run quantitative trait extraction scripts for the *Ceratolobus* group**
 
