@@ -3,3 +3,4 @@ env/*
 resources/calamus_monograph.pdf
 __pycache__/
 *.log
+ceratolobus_outputs/*
