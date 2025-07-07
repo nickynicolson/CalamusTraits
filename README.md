@@ -101,6 +101,8 @@ flowchart LR
     class A,B,C,D rounded;
 ```
 
+![trait_extraction_schematic](resources\trait_extraction_schematic.png)
+
 ### Creating Species Descriptions for a Monograph
 
 ```mermaid
@@ -116,9 +118,13 @@ flowchart LR
     class A,B,C,D rounded;
 ```
 
+![description_generation_schematic](resources\description_generation_schematic.png)
+
 ## Set Up
 
 The scripts require connection to a LLM on a HPC cluster. Follow these instructions for installation [LLM install on HPC](https://github.com/WFO-ID-pilots/.github/blob/main/docs/LLM-install-on-HPC.md)
+
+Use the `--model_name` option to run the scripts with a different ollama model. Default is set to llama3.3-70B
 
 The following instructions assume that you have cloned the repository to a machine where you have: (a) a local installation of Python, (b) the build tool `make` and (c) a command line terminal program to run the following commands:
 
