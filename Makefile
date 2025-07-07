@@ -45,7 +45,7 @@ ceratolobus_outputs/final_combined_descriptions.csv: ceratolobus_outputs/app1_de
 # Use the subject_sentences option to include the subject of each sentence in the final output
 ceratolobus_outputs/subject_descriptions.csv: ceratolobus_outputs/app1_descriptions.csv ceratolobus_outputs/app2_descriptions.csv
 	mkdir -p ceratolobus_outputs
-	python -m scripts.description_generation.combine_descriptions $^ ceratolobus_outputs/final_combined_descriptions.csv --subject_sentences
+	python -m scripts.description_generation.combine_descriptions $^ ceratolobus_outputs/subject_descriptions.csv --subject_sentences
 
 ceratolobus_descriptions: ceratolobus_outputs/final_combined_descriptions.csv
 
