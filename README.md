@@ -101,7 +101,7 @@ flowchart LR
     class A,B,C,D rounded;
 ```
 
-![trait_extraction_schematic](resources\trait_extraction_schematic.png)
+![trait_extraction_schematic](resources/trait_extraction_schematic.png)
 
 ### Creating Species Descriptions for a Monograph
 
@@ -118,7 +118,7 @@ flowchart LR
     class A,B,C,D rounded;
 ```
 
-![description_generation_schematic](resources\description_generation_schematic.png)
+![description_generation_schematic](resources/description_generation_schematic.png)
 
 ## Set Up
 
