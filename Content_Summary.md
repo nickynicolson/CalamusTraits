@@ -59,7 +59,7 @@ graph TD
 | File Name | Description |
 | --------- | ----------- |
 | [app1_extraction.py](https://github.com/KewBridge/CalamusTraits/blob/main/scripts/trait_extraction/app1_extraction.py) | Extracts quantitative traits, as defined in appendix 1, from species descriptions in the monograph. |
-| [app2_extraction.py](https://github.com/KewBridge/CalamusTraits/blob/main/scripts/trait_extraction/app2_extraction.py) | Extracts qualitative traits, as defined in appendix 2, from species descriptions in the monograph. Prompt style can be chosen (located in [prompt.py](https://github.com/KewBridge/CalamusTraits/blob/main/scripts/trait_extraction/prompts.py)): Chain-of-thought prompting, breaking down the task into logical steps; fewshot provides a few examples to guide the model's response; cot-fewshot combines chain-of-thought reasoning with a few examples; zeroshot provides no examples or intermediate reasoning, just directly generates the output. (not included in makefile) |
+| [app2_extraction.py](https://github.com/KewBridge/CalamusTraits/blob/main/scripts/trait_extraction/app2_extraction.py) | Extracts qualitative traits, as defined in appendix 2, from species descriptions in the monograph. Prompt style can be chosen (located in [prompts.py](https://github.com/KewBridge/CalamusTraits/blob/main/scripts/trait_extraction/prompts.py)): Chain-of-thought prompting, breaking down the task into logical steps; fewshot provides a few examples to guide the model's response; cot-fewshot combines chain-of-thought reasoning with a few examples; zeroshot provides no examples or intermediate reasoning, just directly generates the output. (not included in makefile) |
 
 ```mermaid
 graph TD

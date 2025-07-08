@@ -2,9 +2,11 @@
 
 ## Overview
 
-This project explores how we can use LLMs to transition between trait matrices and textual descriptions of species, using a subset of the palm genus *Calamus*.
+Monographs are an essential tool for documenting existing diversity and distribution for taxonomic groups. With humanity facing an extinction crisis, there is a need to speed up the slow and laborious process of monograph compilation.
 
-Calamus was recently monographed in Henderson, A., 2020. A revision of Calamus (Arecaceae, Calamoideae, Calameae, Calaminae). Phytotaxa 445, 1–656. [doi: 10.11646/phytotaxa.445.1.1](https://doi.org/10.11646/phytotaxa.445.1.1)
+*Calamus* was recently monographed in Henderson, A., 2020. A revision of Calamus (Arecaceae, Calamoideae, Calameae, Calaminae). Phytotaxa 445, 1–656. [doi: 10.11646/phytotaxa.445.1.1](https://doi.org/10.11646/phytotaxa.445.1.1).
+
+This project explores how we can use LLMs to transition between trait matrices and textual descriptions of species, using a subset of the palm genus *Calamus*, with the aim of speeding up the taxonomic process. A subset of the 411 *Calamus* species was used for this pilot study. This repo contains details of how to run the scripts for the *Ceratolobus* group.
 
 [Content Summary](https://github.com/KewBridge/CalamusTraits/blob/main/Content_Summary.md) - Shows how the scripts work together and what each file in the repo does.
 
@@ -12,9 +14,10 @@ Calamus was recently monographed in Henderson, A., 2020. A revision of Calamus (
 
 - **2024-09-19** [NN](https://github.com/nickynicolson) presented "New tools for taxonomy" to the Integrated Monography group at Kew, demonstrating [echinopscis](https://echinopscis.github.io/) and large language models, including associated projects run by [Eren Karabey](https://github.com/erenkarabey) ([KewBridge/specimens2illustrations](https://github.com/KewBridge/specimens2illustrations)) and [Young Jun Lee](https://github.com/yjkiwilee). Follow-up discussion focussed on how we could use these tools / techniques in the re-curation of *Calamus*.
 - **2024-09-19** Ben Kuhnhaeuser shared data on *Ceratolobus*, a distinct clade with *Calamus*:
+>
 > I’m sending through a few resources on *Ceratolobus*, a morphologically and phylogenetically well-defined clade and former genus that is now subsumed in Calamus. It contains six species, *C. concolor, C. disjunctus, C. glaucescens, C. hallierianus, C. pseudoconcolor*,  and *C. subangulatus*.
 >
-> All species are described in Henderson 2020, which is accompanied by a supplementary data matrix: https://phytotaxa.mapress.com/pt/article/view/phytotaxa.445.1.1.
+> All species are described in Henderson 2020, which is accompanied by a [supplementary data matrix](https://phytotaxa.mapress.com/pt/article/view/phytotaxa.445.1.1).
 >
 > The supplementary is also available on Zenodo and as such in the public domain. The Ceratolobus rows of the spreadsheet are only a tiny fraction of the entire dataset. The column abbreviations are explained in the main manuscript in appendices I (p. 478) and II (pp. 479-486).
 >
@@ -26,16 +29,14 @@ Calamus was recently monographed in Henderson, A., 2020. A revision of Calamus (
 
 ## Sample treatment
 
-> **132. _Calamus hallierianus_ (Beccari ex Heyne) Baker (2015b: 235)**. _Ceratolobus hallierianus_ Beccari ex Heyne
-(1913: 93). Lectotype (designated here):—INDONESIA. Borneo, Soengei Kenepai, 1893–1894, _H. Hallier 2088_
+> **132. *Calamus hallierianus* (Beccari ex Heyne) Baker (2015b: 235)**. *Ceratolobus hallierianus* Beccari ex Heyne (1913: 93). Lectotype (designated here):—INDONESIA.Borneo, Soengei Kenepai, 1893–1894, *H. Hallier 2088*
 (lectotype L!, isolectotype BO!).
-> 
-> _Ceratolobus discolor_ Beccari (1886: 63) _nom. illeg., non Calamus discolor_ Martius (1838: 212). _Calamus ceratolobus_ Baker (2015a:
-150). Type:—MALAYSIA. Sarawak, no date, _O. Beccari 1915_ (holotype FI!).
-_Calamus georgei_ Baker (2015a: 150). _Ceratolobus kingianus_ Beccari & Hooker in Hooker (1893: 477), _non Calamus kingianus_ Beccari
-(1908a: 197). Lectotype (designated by Dransfield 1979b):—MALAYSIA. Perak, Larut, March 1882, _Dr. King’s collector 2856_
-(lectotype FI!, isolectotype K!, LE _n.v._, LE image!).
-> 
+> *Ceratolobus discolor* Beccari (1886: 63) *nom. illeg., non Calamus discolor* Martius (1838: 212). *Calamus ceratolobus* Baker (2015a:
+150). Type:—MALAYSIA. Sarawak, no date, *O. Beccari 1915* (holotype FI!).
+*Calamus georgei* Baker (2015a: 150). *Ceratolobus kingianus* Beccari & Hooker in Hooker (1893: 477), *non Calamus kingianus* Beccari
+(1908a: 197). Lectotype (designated by Dransfield 1979b):—MALAYSIA. Perak, Larut, March 1882, *Dr. King’s collector 2856*
+(lectotype FI!, isolectotype K!, LE *n.v.*, LE image!).
+>
 > **Stems** clustered, rarely solitary, climbing, 11.8(3.0–20.0) m long, 1.9(0.7–3.2) cm diameter. **Leaf sheaths** tubular,
 closed opposite the petiole, with a knee below the petiole; leaf sheaths with numerous spicules borne on short, low,
 horizontal ridges, easily detached and leaving the sheaths with ridges only, sometimes with larger spines present;
@@ -58,28 +59,28 @@ globose, 15.1(11.3–19.6) cm long, 13.0(9.2–16.5) mm diameter, color not reco
 scales deeply channeled longitudinally; seeds 1 per fruit, basally attached, small, ellipsoid, with a ventral depression,
 reniform in longitudinal section, the dorsal surfaces pitted, covered with a tanniniferous, non-fibrous sarcotesta; raphe
 branches obscure; endosperm with deep, pit-like ruminations; embryos at or near base of seed.
-> 
+>
 > **Distribution and habitat**:—Peninsular Malaysia, Sumatra, and Borneo (Brunei, West, Central, and South
 Kalimantan, Sarawak) (Fig. 60) in lowland rainforest at 157(10–500) m elevation.
-> 
-> **Taxonomic notes**:—_Calamus hallierianus_ was previously included in _Ceratolobus_ and is a member of the _C.
-concolor_ group (see notes under that species). It is similar to _C. glaucescens_ in its pinnae that are indumentose abaxially
+>
+> **Taxonomic notes**:—*Calamus hallierianus* was previously included in *Ceratolobus* and is a member of the *C.
+concolor* group (see notes under that species). It is similar to *C. glaucescens* in its pinnae that are indumentose abaxially
 but differs from that species by its leaf sheaths with numerous spicules.
-_Ceratolobus kingianus_ is included here; it shares all qualitative variable states with _C. hallierianus_ (see also
+*Ceratolobus kingianus* is included here; it shares all qualitative variable states with *C. hallierianus* (see also
 Dransfield 1979b).
-> 
-> **Subspecific variation**:—_Calamus hallierianus_ has a similar distribution to that of _C. subangulatus_, and within
+>
+> **Subspecific variation**:—*Calamus hallierianus* has a similar distribution to that of *C. subangulatus*, and within
 each of the three areas where it occurs (Peninsular Malaysia, Sumatra, and Borneo) it shows considerable variation.
 In Peninsular Malaysia, plants occur in three separate populations. Specimens from the west side (Perak) have thicker
 stems and larger pinnae; those from the northeast (Terengganu) have longer petioles, longer rachises and more pinnae
 per side of the rachis; and specimens from the southeast (Pahang, Johore) have narrower stems, shorter petioles, and
 fewer, smaller pinnae.
-> 
-> Specimens from Sumatra are relatively uniform but occur only in a small area. _Calamus hallierianus_ is widespread
-in Borneo but mostly in the central part of the island. Several specimens are problematic. One specimen (_Ramos 1490_)
+>
+> Specimens from Sumatra are relatively uniform but occur only in a small area. *Calamus hallierianus* is widespread
+in Borneo but mostly in the central part of the island. Several specimens are problematic. One specimen (*Ramos 1490*)
 is said on the label to come from Sandakan in Sabah, far outside the range of other specimens. A sterile specimen
-(_Mogea 7398_), from far outside the range of other specimens in South Kalimantan, has an unusual, spiny sheath. A
-specimen (_Peters s.n._) is also unusual in its spiny leaf sheaths, small fruits, and habitat. The label records the habitat as
+(*Mogea 7398*), from far outside the range of other specimens in South Kalimantan, has an unusual, spiny sheath. A
+specimen (*Peters s.n.*) is also unusual in its spiny leaf sheaths, small fruits, and habitat. The label records the habitat as
 “seasonally inundated forest … flooded 4 to 6 months a year”.
 
 ## Process
