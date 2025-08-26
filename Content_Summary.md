@@ -185,3 +185,5 @@ graph TD
 | final_combined_descriptions.csv | A paragraph description of each species. Combing app1_descriptions.csv and app2_descriptions.csv. |
 | subject_descriptions.csv | Descriptions are combined but separated by subject. Useful for comparison to human-written descriptions (not included in `make all`) |
 | quantitative_traits.csv | This file stores the output of the qualitative trait extraction. |
+
+**Notebooks/** folder holds .ipynb files that were used for initial data exploration and are not used in the workflow of this repo.
