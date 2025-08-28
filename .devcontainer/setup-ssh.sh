@@ -11,6 +11,16 @@ echo -e "Host *\n  StrictHostKeyChecking no\n" > ~/.ssh/config
 # Start ssh-agent
 eval "$(ssh-agent -s)"
 
-# Add the key, passing the passphrase
-# -k disables passphrase prompt, and we feed it via stdin
-ssh-add ~/.ssh/id_rsa <<< "$HPC_SSH_ID_RSA_PASSPHRASE"
+# Use SSH_ASKPASS trick to feed passphrase
+# ssh-add reads passphrase by calling $SSH_ASKPASS in a no-tty context
+export DISPLAY=:0
+export SSH_ASKPASS=/tmp/askpass.sh
+
+cat << 'EOF' > $SSH_ASKPASS
+#!/usr/bin/env bash
+echo "$HPC_SSH_ID_RSA_PASSPHRASE"
+EOF
+chmod +x $SSH_ASKPASS
+
+# Run ssh-add in a way that forces it to use SSH_ASKPASS
+setsid ssh-add ~/.ssh/id_rsa < /dev/null
