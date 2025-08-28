@@ -5,5 +5,5 @@
     // Use a GitHub Codespaces secret:
     "SOURCE_PDF": "${localEnv:SOURCE_PDF}"
   },
-  "postStartCommand": "pip install -r requirements.txt && wget --output-document=resources/calamus_monograph.pdf $SOURCE_PDF && echo \"${HPC_SSH_ID_RSA}\" | ssh-add -"
+  "postStartCommand": "pip install -r requirements.txt"
 }
