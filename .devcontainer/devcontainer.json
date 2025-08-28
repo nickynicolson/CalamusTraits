@@ -1,9 +1,9 @@
 {
-  "name": "CalamusTraits",
-  "image": "mcr.microsoft.com/devcontainers/python:3.13",
+  "name": "Python 3.13",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13-bullseye",  
   "remoteEnv": {
     // Use a GitHub Codespaces secret:
-    "SOURCE_PDF": "${localEnv:SOURCE_PDF}",
+    "SOURCE_PDF": "${localEnv:SOURCE_PDF}"
   },
-  "postStartCommand": "pip install -r requirements.txt; wget --output-document=resources/calamus_monograph.pdf $SOURCE_PDF"
+  "postStartCommand": "pip install -r requirements.txt && wget --output-document=resources/calamus_monograph.pdf $SOURCE_PDF"
 }
