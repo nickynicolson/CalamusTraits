@@ -5,5 +5,5 @@
     // Use a GitHub Codespaces secret:
     "SOURCE_PDF": "${localEnv:SOURCE_PDF}"
   },
-  "postStartCommand": "pip install -r requirements.txt && ./.devcontainer/setup-ssh.sh"
+  "postStartCommand": "pip install -r requirements.txt && bash ./.devcontainer/setup-ssh.sh"
 }
