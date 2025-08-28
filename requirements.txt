@@ -3,4 +3,3 @@ numpy
 pypdf
 openpyxl
 ollama
-textwrap
