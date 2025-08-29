@@ -5,5 +5,15 @@
     // Use a GitHub Codespaces secret:
     "SOURCE_PDF": "${localEnv:SOURCE_PDF}"
   },
-  "postStartCommand": "pip install -r requirements.txt && bash ./.devcontainer/setup-ssh.sh"
+  "postStartCommand": "pip install -r requirements.txt && bash ./.devcontainer/setup-ssh.sh",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "terminal.integrated.profiles.linux": {
+      "bash": {
+        "path": "/bin/bash",
+        "args": ["-l"]
+      }
+    },
+    "terminal.integrated.defaultProfile.linux": "bash"
+  }
 }
