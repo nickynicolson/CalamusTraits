@@ -24,3 +24,5 @@ chmod +x $SSH_ASKPASS
 
 # Run ssh-add in a way that forces it to use SSH_ASKPASS
 setsid ssh-add ~/.ssh/id_rsa < /dev/null
+
+unset HPC_SSH_ID_RSA_PASSPHRASE
