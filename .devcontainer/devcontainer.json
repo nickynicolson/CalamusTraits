@@ -7,14 +7,6 @@
   },
   "postStartCommand": "pip install -r requirements.txt && bash ./.devcontainer/setup-ssh.sh",
   "settings": {
-    "terminal.integrated.startIn": "none",
-    "terminal.integrated.shell.linux": "/bin/bash",
-    "terminal.integrated.profiles.linux": {
-      "bash": {
-        "path": "/bin/bash",
-        "args": ["-l"]
-      }
-    },
-    "terminal.integrated.defaultProfile.linux": "bash"
+    "terminal.integrated.startIn": "none"
   }
 }
