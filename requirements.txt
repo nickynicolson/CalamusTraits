@@ -3,3 +3,4 @@ numpy
 pypdf
 openpyxl
 ollama
+jupyterlab
